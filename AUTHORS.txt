@@ -1,0 +1,20 @@
+----------------------------------------------------
+                  ENSICAEN
+               
+            6 Boulevard Maréchal Juin
+                
+              F-14050 Caen Cedex
+
+             
+              Mini-project : Ants
+           
+  
+  Copyright (C) 2018 Jerome MORVAN & Edgar THOMAS
+
+----------------------------------------------------
+
+
+
+MORVAN Jerome (morvan@ecole.ensicaen.fr)
+
+THOMAS Edgar (ethomas@ecole.ensicaen.fr)
