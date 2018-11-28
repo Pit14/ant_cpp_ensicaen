@@ -1,6 +1,7 @@
 //
 // Created by edgar on 28/11/2018.
 //
+using namespace std;
 
 #ifndef C_WORKER_H
 #define C_WORKER_H
