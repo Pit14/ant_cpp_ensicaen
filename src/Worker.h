@@ -10,6 +10,14 @@
 
 class Worker: public Ant {
 
+    bool is_minor;
+    bool is_carriyng_food;
+    int pheromone = 500;
+
+    void pick_up_food();
+    void die();
+    void drop_food();
+    void move(Coord c);
 
 };
 
