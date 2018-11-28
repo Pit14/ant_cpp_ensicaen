@@ -18,10 +18,13 @@ public:
 
     virtual ~Ant();
 
-private:
+protected:
     Coord current_coord;
+
+private:
     std::stack<Coord> path_to_nest;
     int age;
+    void die();
 
 
 };
