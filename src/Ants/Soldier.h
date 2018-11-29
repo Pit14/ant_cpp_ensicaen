@@ -12,7 +12,9 @@ using namespace std;
 
 class Soldier: public Ant {
     bool is_returning_to_the_nest;
-    void kill(BadAnt b);;
+    void kill(BadAnt b);
+
+public:
 
 };
 

@@ -22,3 +22,11 @@ void Worker::drop_food() {
 void Worker::move(Coord c) {
     current_coord = c;
 }
+
+void Worker::live() {
+    if(!is_minor){
+
+    }else{
+        // Quand la fourmis est mineur ?
+    }
+}
