@@ -20,7 +20,7 @@ public:
     Cell();
     void TakeFood();
     void EatFood(int value);
-    void setValue(Coord* current_coord, float food, int phero, int current_ants,state_cell state);
+    friend void setValue(Cell &, Coord* current_coord, float food, int phero, int current_ants,state_cell state);
 
 
     Coord* current_coord;

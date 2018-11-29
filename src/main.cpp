@@ -24,6 +24,7 @@ int main() {
     g->array[0][9].food = 5;
     g->array[3][3].food = 9;
     printf(g);
+    g->generate_rock();
     return 0;
 }
 

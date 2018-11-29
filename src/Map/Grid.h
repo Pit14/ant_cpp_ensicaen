@@ -7,15 +7,20 @@
 
 #include "Cell.h"
 
-#define HEIGHT 10
-#define WIDTH  10
+#define HEIGHT 211
+#define WIDTH  201
 
 class Grid {
 
 public:
     Grid();
     void Initialize();
+    void generate_rock();
+    void create_rock(double number_of_rock, int size_rock);
+    bool isFree(int x, int y);
+    bool noNeighbour (int x, int y);
     Cell **array;
+    double rock_value;
 };
 
 
