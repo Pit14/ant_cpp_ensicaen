@@ -7,7 +7,7 @@ using namespace std;
 #define C_ANT_H
 
 
-#include "Coord.h"
+#include "../Map/Coord.h"
 #include <stack>
 
 class Ant {

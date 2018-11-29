@@ -3,4 +3,4 @@ project(C__)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(C__ src/main.cpp src/Ant.cpp src/Ant.h src/Coord.cpp src/Coord.h src/Worker.cpp src/Worker.h src/Grid.h src/Grid.cpp src/Cell.h src/Cell.cpp src/BadAnt.cpp src/BadAnt.h src/Soldier.cpp src/Soldier.h)
+add_executable(C__ src/main.cpp src/Ants/Ant.cpp src/Ants/Ant.h src/Map/Coord.cpp src/Map/Coord.h src/Ants/Worker.cpp src/Ants/Worker.h src/Map/Grid.h src/Map/Grid.cpp src/Map/Cell.h src/Map/Cell.cpp src/Ants/BadAnt.cpp src/Ants/BadAnt.h src/Ants/Soldier.cpp src/Ants/Soldier.h)

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "Grid.h"
+#include "Map/Grid.h"
 
 using namespace std;
 
