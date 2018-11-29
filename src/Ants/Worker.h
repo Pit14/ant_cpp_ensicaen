@@ -19,6 +19,7 @@ class Worker: public Ant {
     void die();
     void drop_food();
     void move(Coord c);
+    void live();
 
 };
 
