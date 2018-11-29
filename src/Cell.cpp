@@ -6,7 +6,7 @@
 #include "Coord.h"
 
 
-Cell::Cell( Coord &current_coord, float food, int phero, int current_ants, state_cell state) : current_coord(current_coord), food(food), phero(phero), current_ants(current_ants), state(state){}
+Cell::Cell(){}
 
 void Cell::TakeFood() {
     food--;
@@ -16,3 +16,11 @@ void Cell::EatFood( int value) {
     food = food - value;
 
 }
+
+void Cell::setValue(Coord* current_coords, float foods, int pheros, int currents_ants,state_cell states) {
+    current_coord = current_coords;
+    food = foods;
+    phero = pheros;
+    current_ants = currents_ants;
+    states = states;
+};

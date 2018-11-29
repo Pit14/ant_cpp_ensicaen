@@ -5,14 +5,17 @@
 #ifndef C_GRID_H
 #define C_GRID_H
 
-#define HEIGHT 211
-#define WIDTH  201
+#include "Cell.h"
+
+#define HEIGHT 10
+#define WIDTH  10
 
 class Grid {
 
 public:
-    Grid::Grid(){};
+    Grid::Grid();
     void Grid::Initialize();
+    Cell **array;
 };
 
 
