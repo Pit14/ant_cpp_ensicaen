@@ -13,8 +13,8 @@
 class Grid {
 
 public:
-    Grid::Grid();
-    void Grid::Initialize();
+    Grid();
+    void Initialize();
     Cell **array;
 };
 

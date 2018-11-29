@@ -22,5 +22,5 @@ void Cell::setValue(Coord* current_coords, float foods, int pheros, int currents
     food = foods;
     phero = pheros;
     current_ants = currents_ants;
-    states = states;
+    state = states;
 };
