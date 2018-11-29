@@ -12,18 +12,16 @@ using namespace std;
 
 class Ant {
 public:
-    Ant(const Coord &current_coord, Coord *path_to_nest, int age);
-
-    Ant(const Coord &current_coord, const stack<Coord> &path_to_nest, int age);
 
     virtual ~Ant();
 
 protected:
     Coord current_coord;
-
-private:
     std::stack<Coord> path_to_nest;
     int age;
+
+
+private:
     void die();
 
 
