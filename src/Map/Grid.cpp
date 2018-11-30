@@ -7,20 +7,37 @@
 #include "Grid.h"
 #include "Cell.h"
 
+
+
 Grid::Grid() {
     rock_value = round(HEIGHT*WIDTH*0.3);
 }
 
+bool Grid::isOutOfLimit( int x, int y) {
+    if (x > WIDTH  || x < 0)
+        return true;
+    if (y > HEIGHT || y < 0)
+        return true;
+    return false;
+}
 bool Grid::noNeighbour( int x, int y) {
 
-    if (array[x-1][y].state != FREE)
-        return false;
-    if (array[x+1][y].state != FREE)
-        return false;
-    if (array[x][y+1].state != FREE)
-        return false;
-    if (array[x][y-1].state != FREE)
-        return false;
+    if (!isOutOfLimit(x-1,y)) {
+        if (array[x - 1][y].state != FREE)
+            return false;
+    }
+    if(!isOutOfLimit(x+1,y)) {
+        if (array[x + 1][y].state != FREE)
+            return false;
+    }
+    if(!isOutOfLimit(x,y+1)) {
+        if (array[x][y + 1].state != FREE)
+            return false;
+    }
+    if(!isOutOfLimit(x,y-1)) {
+        if (array[x][y - 1].state != FREE)
+            return false;
+    }
     return true;
 }
 bool Grid::isFree(int x, int y) {
@@ -39,11 +56,10 @@ void Grid::create_rock(double number_of_rock, int size_rock) {
         x = rand() % WIDTH;
         y = rand() % HEIGHT;
 
-
         if (isFree(x,y)){
-          /*  if (noNeighbour(x,y)) {
-            // gerer si on tombe sur un bord
-            }*/
+            if (noNeighbour(x,y)) {
+
+            }
         }
     }
 }

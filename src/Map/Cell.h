@@ -7,10 +7,8 @@
 
 
 #include "Coord.h"
+#include "../define.h"
 
-typedef enum {
-    FREE, COLONY, BLOCKED
-} state_cell;
 class Cell {
 
 

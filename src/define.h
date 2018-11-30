@@ -6,7 +6,12 @@
 #define C_DEFINE_H
 
 
+#define HEIGHT 211
+#define WIDTH  201
 
+typedef enum {
+    FREE, COLONY, BLOCKED
+} state_cell;
 
 
 
