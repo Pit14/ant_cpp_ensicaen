@@ -19,6 +19,8 @@ public:
     bool isFree(int x, int y);
     bool noNeighbour (int x, int y);
     bool isOutOfLimit(int x, int y);
+    bool recursive_rock(int x, int y, int size_rock, previous_pos old );
+    void print_grid ();
     Cell **array;
     double rock_value;
 };

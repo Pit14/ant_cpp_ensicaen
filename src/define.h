@@ -6,12 +6,16 @@
 #define C_DEFINE_H
 
 
-#define HEIGHT 211
-#define WIDTH  201
+#define HEIGHT 20
+#define WIDTH  20
 
 typedef enum {
-    FREE, COLONY, BLOCKED
+    FREE, COLONY, BLOCKED, GHOST_ROCK
 } state_cell;
+
+typedef enum {
+    NONE, LEFT, RIGHT, BOTTOM, TOP
+} previous_pos;
 
 
 
