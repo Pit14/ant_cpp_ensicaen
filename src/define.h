@@ -8,9 +8,11 @@
 
 #define HEIGHT 20
 #define WIDTH  20
+#define FOOD_1_case 10
+#define BIG_FOOD 2000
 
 typedef enum {
-    FREE, COLONY, BLOCKED, GHOST_ROCK
+    FREE, COLONY, BLOCKED, GHOST_ROCK, FOOD, GHOST_FOOD
 } state_cell;
 
 typedef enum {
