@@ -1,0 +1,4 @@
+"D:\Program Files\CLion 2018.2.6\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - MinGW Makefiles" C:\Users\edgar\Documents\GitHub\mini_projet_cpp
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/Users/edgar/Documents/GitHub/mini_projet_cpp/cmake-build-release
