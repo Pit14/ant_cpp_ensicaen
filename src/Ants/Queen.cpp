@@ -15,4 +15,5 @@ Ant* Queen::give_birth(){
     }else{
       //  return new Scout();
     }
+
 }
