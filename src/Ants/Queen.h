@@ -14,7 +14,7 @@
 class Queen:public Ant {
 
 public :
-    Ant* give_birth();
+    void give_birth();
 };
 
 

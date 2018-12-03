@@ -4,7 +4,7 @@
 
 #include "Queen.h"
 
-Ant* Queen::give_birth(){
+/*Ant**/ void Queen::give_birth(){
 
     int rand;
 

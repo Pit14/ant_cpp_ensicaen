@@ -6,16 +6,27 @@
 #define C_GRID_H
 
 #include "Cell.h"
+#include "../define.h"
 
-#define HEIGHT 10
-#define WIDTH  10
 
 class Grid {
 
 public:
-    Grid::Grid();
-    void Grid::Initialize();
+    Grid();
+    void Initialize();
+    void generate();
+    void create_original_colony();
+    void create_rock(double number_of_rock, int size_rock);
+    void create_food(double number_of_food, int size_food, int food_value);
+    bool isFree(int x, int y);
+    bool noNeighbour (int x, int y);
+    bool isOutOfLimit(int x, int y);
+    bool recursive(int x, int y, int size_rock, previous_pos old );
+    bool recursive(int x, int y,int size_rock, previous_pos old , int food_value);
+    void print_grid ();
     Cell **array;
+    double rock_value;
+    double food_number;
 };
 
 
