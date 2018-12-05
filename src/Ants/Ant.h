@@ -8,8 +8,9 @@ using namespace std;
 
 
 #include "../Map/Coord.h"
-#include "../Ants/Nest.h"
 #include <stack>
+
+class Nest;
 
 class Ant {
 
@@ -27,7 +28,7 @@ protected:
     Coord current_coord;
     std::stack<Coord> path_to_nest;
     int age;
-    Nest nest;
+    Nest *nest;
 
 
 

@@ -3,6 +3,7 @@
 //
 
 #include "Queen.h"
+#include "Nest.h"
 
 Queen::Queen():
     Ant()
@@ -24,8 +25,8 @@ void Queen::update(){
 }
 
 void Queen::eat(){
-    if(this->nest.food < 0.01){
-        this->nest.food -= 0.01;
+    if(nest->getFood() < 0.01){
+        nest->setFood(nest->getFood()- 0.01);
     }else{
         this->die();
     }

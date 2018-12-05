@@ -10,12 +10,22 @@
 
 class Nest {
 
-public:
-    Nest();
 protected :
-    Simulate();
+    void Simulate();
     list<Ant*> ants;
     double food;
+
+public:
+
+    Nest();
+
+    void setAnts(const list<Ant*> &ants);
+
+    void setFood(double food);
+
+    const list<Ant *> &getAnts() const;
+
+    double getFood() const;
 };
 
 

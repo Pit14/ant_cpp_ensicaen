@@ -4,6 +4,7 @@
 using namespace std;
 
 #include "Ant.h"
+#include "Nest.h"
 
 Ant::~Ant() {
 
