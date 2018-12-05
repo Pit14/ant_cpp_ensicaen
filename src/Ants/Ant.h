@@ -11,7 +11,9 @@ using namespace std;
 #include <stack>
 
 class Ant {
+
 public:
+    Ant(const Coord & = {0,0}, int = 0);
 
     virtual ~Ant();
 

@@ -10,6 +10,7 @@
 #include <zconf.h>
 #include "Grid.h"
 #include "Cell.h"
+#include "../Ants/Queen.h"
 
 
 Grid::Grid()
@@ -320,6 +321,9 @@ void Grid::Initialize() {
         }
     }
 
+    //we spawn the queen
+
+    Queen queen = new Queen();
 
 
 
