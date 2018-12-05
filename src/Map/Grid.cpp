@@ -69,9 +69,12 @@ void Grid::print_grid(){
     sf::View view = window.getDefaultView();
 
 
-
     while(window.isOpen()) {
         window.clear();
+        //run the simulation for the day
+
+
+
     loadSprite(window);
 
 
@@ -321,8 +324,7 @@ void Grid::Initialize() {
 
     //we spawn the queen
 
-    Queen queen = new Queen();
-
+    Queen *queen = new Queen();
 
 
 }

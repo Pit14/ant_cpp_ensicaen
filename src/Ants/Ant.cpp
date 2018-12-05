@@ -9,5 +9,5 @@ Ant::~Ant() {
 
 }
 
-Ant::Ant(const Coord &current_coord, int age) : current_coord(current_coord),
+Ant::Ant(Coord current_coord, int age) : current_coord(current_coord),
                                                 age(age) {}

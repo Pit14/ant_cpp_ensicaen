@@ -8,23 +8,28 @@ using namespace std;
 
 
 #include "../Map/Coord.h"
+#include "../Ants/Nest.h"
 #include <stack>
 
 class Ant {
 
 public:
-    Ant(const Coord & = {0,0}, int = 0);
+    Ant(Coord = {0,0}, int = 0);
 
     virtual ~Ant();
+
+    virtual void update() = 0;
+    virtual void eat() = 0;
+    virtual void die() = 0;
+
 
 protected:
     Coord current_coord;
     std::stack<Coord> path_to_nest;
     int age;
+    Nest nest;
 
 
-private:
-    void die();
 
 
 };

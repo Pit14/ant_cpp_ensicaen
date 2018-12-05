@@ -6,6 +6,7 @@
 #define C_QUEEN_H
 
 
+#include <iostream>
 #include "Ant.h"
 #include "Soldier.h"
 #include "Worker.h"
@@ -14,7 +15,11 @@
 class Queen:public Ant {
 
 public:
-    explicit Queen();
+    Queen();
+
+    virtual void update();
+    virtual void eat();
+    virtual void die();
 
     void give_birth();
     //Coord position;
