@@ -71,7 +71,9 @@ void Grid::print_grid(){
 
     while(window.isOpen()) {
         window.clear();
-    loadSprite(window);
+
+
+        loadSprite(window);
 
 
         sf::Event event;
