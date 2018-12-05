@@ -7,9 +7,13 @@
 
 #include "Cell.h"
 #include "../define.h"
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics.hpp>
 
 
 class Grid {
+
 
 public:
     Grid();
@@ -24,9 +28,11 @@ public:
     bool recursive(int x, int y, int size_rock, previous_pos old );
     bool recursive(int x, int y,int size_rock, previous_pos old , int food_value);
     void print_grid ();
+    void loadSprite(sf::RenderWindow &window);
     Cell **array;
     double rock_value;
     double food_number;
+
 };
 
 

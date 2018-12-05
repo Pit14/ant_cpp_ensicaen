@@ -6,8 +6,8 @@
 #define C_DEFINE_H
 
 
-#define HEIGHT 20
-#define WIDTH  20
+#define HEIGHT 211
+#define WIDTH  201
 #define FOOD_1_case 10
 #define BIG_FOOD 2000
 

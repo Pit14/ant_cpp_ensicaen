@@ -4,31 +4,144 @@
 
 #include <cmath>
 #include <iostream>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics.hpp>
+#include <zconf.h>
 #include "Grid.h"
 #include "Cell.h"
 
 
+Grid::Grid()
+{
 
-Grid::Grid() {
     rock_value = round(HEIGHT*WIDTH*0.3);
-    food_number = round(HEIGHT*WIDTH*0.02);
+    food_number = round(HEIGHT*WIDTH*0.0002);
 }
 
+
+void Grid::loadSprite(sf::RenderWindow &window) {
+
+    sf::Texture fourmis;
+    sf::Texture bouffe;
+    sf::Texture gazon;
+    sf::Texture colony;
+    sf::Texture rock;
+
+
+    sf::Sprite sprites;
+    fourmis.loadFromFile("../src/pic/ant.jpg");
+    bouffe.loadFromFile("../src/pic/food.jpg");
+    gazon.loadFromFile("../src/pic/pelouse.jpg");
+    colony.loadFromFile("../src/pic/colony.jpg");
+    rock.loadFromFile("../src/pic/rock.png");
+
+    for (int y(0); y < HEIGHT; y++) {
+        for (int x(0); x < WIDTH; x++) {
+
+
+
+            if (array[x][y].state == BLOCKED)
+                sprites.setTexture(rock);
+            else if (array[x][y].state == FOOD)
+                sprites.setTexture(bouffe);
+            else if (array[x][y].state == COLONY)
+                sprites.setTexture(colony);
+            else
+                sprites.setTexture(gazon);
+
+            sprites.setTextureRect(sf::IntRect(0, 0, 100, 100));
+            sprites.setPosition(32 * x + 1, 32 * y + 1);
+            window.draw(sprites);
+        }
+    }
+}
 void Grid::print_grid(){
 
-    for(int y(0);y<HEIGHT;y++){
-        for(int x(0);x<WIDTH;x++){
-            if(array[x][y].state == BLOCKED)
-                cout << 1;
-            else if(array[x][y].state == FOOD)
-                cout << 2;
-            else if(array[x][y].state == COLONY)
-                cout << 3;
-            else
-                cout << 0;
+
+
+    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
+    window.setFramerateLimit(30);
+    //window.setFramerateLimit(100);
+    sf::Vector2f oldPos;
+    bool moving = false;
+
+    float zoom = 1;
+
+    // Retrieve the window's default view
+    sf::View view = window.getDefaultView();
+
+
+
+    while(window.isOpen()) {
+        window.clear();
+    loadSprite(window);
+
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            switch (event.type) {
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+                case sf::Event::MouseButtonPressed:
+                    // Mouse button is pressed, get the position and set moving as active
+                    if (event.mouseButton.button == 0) {
+                        moving = true;
+                        oldPos = window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
+                    }
+                    break;
+                case  sf::Event::MouseButtonReleased:
+                    // Mouse button is released, no longer move
+                    if (event.mouseButton.button == 0) {
+                        moving = false;
+                    }
+                    break;
+                case sf::Event::MouseMoved:
+                {
+                    // Ignore mouse movement unless a button is pressed (see above)
+                    if (!moving)
+                        break;
+                    // Determine the new position in world coordinates
+                    const sf::Vector2f newPos = window.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
+                    // Determine how the cursor has moved
+                    // Swap these to invert the movement direction
+                    const sf::Vector2f deltaPos = oldPos - newPos;
+
+                    // Move our view accordingly and update the window
+                    view.setCenter(view.getCenter() + deltaPos);
+                    window.setView(view);
+
+                    // Save the new position as the old one
+                    // We're recalculating this, since we've changed the view
+                    oldPos = window.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
+                    break;
+                }
+                case sf::Event::MouseWheelScrolled:
+                    // Ignore the mouse wheel unless we're not moving
+                    if (moving)
+                        break;
+
+                    // Determine the scroll direction and adjust the zoom level
+                    // Again, you can swap these to invert the direction
+                    if (event.mouseWheelScroll.delta <= -1)
+                        zoom = std::min(2.f, zoom + .1f);
+                    else if (event.mouseWheelScroll.delta >= 1)
+                        zoom = std::max(.5f, zoom - .1f);
+
+                    // Update our view
+                    view.setSize(window.getDefaultView().getSize()); // Reset the size
+                    view.zoom(zoom); // Apply the zoom level (this transforms the view)
+                    window.setView(view);
+                    break;
+            }
         }
-        cout << endl;
+
+
+        window.display();
+
     }
+
+
 }
 
 bool Grid::isOutOfLimit( int x, int y) {
@@ -160,7 +273,7 @@ void Grid::create_food(double number_of_food, int size_food, int food_value) {
     int x,y;
 
     for( cmptr = 0; cmptr < number_of_food; cmptr++ ) {
-        cout << 1 << endl;
+    //    cout << 1 << endl;
         x = rand() % WIDTH;
         y = rand() % HEIGHT;
 

@@ -8,13 +8,13 @@
 using namespace std;
 
 
-bool intersects(const sf::CircleShape& c1, const sf::CircleShape& c2){
+/*bool intersects(const sf::CircleShape& c1, const sf::CircleShape& c2){
     sf::FloatRect circ1 = c1.getGlobalBounds();
     sf::FloatRect circ2 = c2.getGlobalBounds();
 
     return circ1.intersects(circ2);
 }
-
+*/
 int main(){
 
     srand(time(NULL));
@@ -26,7 +26,7 @@ int main(){
     // printf(g);
     g->create_original_colony();
     g->generate();
-
+/*
     sf::VideoMode videomode(400, 400);
     sf::RenderWindow window(videomode, "GAME");
     sf::CircleShape circle;
@@ -141,6 +141,6 @@ int main(){
 
             std::cout << "Yellow loses";
         }
-    }
+    }*/
 }
 
