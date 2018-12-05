@@ -71,11 +71,7 @@ void Grid::print_grid(){
 
     while(window.isOpen()) {
         window.clear();
-        //run the simulation for the day
-
-
-
-    loadSprite(window);
+        loadSprite(window);
 
 
         sf::Event event;
