@@ -33,6 +33,13 @@ public:
     double rock_value;
     double food_number;
 
+    sf::Sprite sprites;
+    sf::Texture fourmis;
+    sf::Texture bouffe;
+    sf::Texture gazon;
+    sf::Texture colony;
+    sf::Texture rock;
+
 };
 
 

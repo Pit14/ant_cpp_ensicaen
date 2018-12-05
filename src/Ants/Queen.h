@@ -15,6 +15,7 @@ class Queen:public Ant {
 
 public :
     void give_birth();
+    //Coord position;
 };
 
 

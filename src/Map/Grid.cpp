@@ -17,16 +17,7 @@ Grid::Grid()
 
     rock_value = round(HEIGHT*WIDTH*0.3);
     food_number = round(HEIGHT*WIDTH*0.0002);
-}
 
-
-void Grid::loadSprite(sf::RenderWindow &window) {
-
-    sf::Texture fourmis;
-    sf::Texture bouffe;
-    sf::Texture gazon;
-    sf::Texture colony;
-    sf::Texture rock;
 
 
     sf::Sprite sprites;
@@ -35,6 +26,11 @@ void Grid::loadSprite(sf::RenderWindow &window) {
     gazon.loadFromFile("../src/pic/pelouse.jpg");
     colony.loadFromFile("../src/pic/colony.jpg");
     rock.loadFromFile("../src/pic/rock.png");
+}
+
+
+void Grid::loadSprite(sf::RenderWindow &window) {
+
 
     for (int y(0); y < HEIGHT; y++) {
         for (int x(0); x < WIDTH; x++) {
@@ -76,6 +72,7 @@ void Grid::print_grid(){
     while(window.isOpen()) {
         window.clear();
     loadSprite(window);
+
 
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -320,6 +317,7 @@ void Grid::Initialize() {
             setValue(array[cmptr][cmptr2], temp_coord,0,0,0,FREE);
         }
     }
+
 
 
 
