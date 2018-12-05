@@ -4,16 +4,23 @@
 
 #include "Queen.h"
 
+Queen::Queen():
+    Ant::Ant()
+{
+
+}
+
 /*Ant**/ void Queen::give_birth(){
 
-    int rand;
+    int random;
 
-    if(rand <= 80) {
+    if(random <= 80) {
         //return new Worker();
-    } else if(rand <= 95) {
+    } else if(random <= 95) {
        // return new Soldier(new Coord(0,0),new Coord*,0,0);
     }else{
       //  return new Scout();
     }
 
 }
+

@@ -13,7 +13,9 @@
 
 class Queen:public Ant {
 
-public :
+public:
+    explicit Queen();
+
     void give_birth();
     //Coord position;
 };
