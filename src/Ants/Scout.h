@@ -9,7 +9,13 @@
 #include "Ant.h"
 
 class Scout: public Ant {
+
 public:
+    virtual void die();
+    void move(Coord c);
+    virtual void eat();
+    virtual void update();
+    Scout(Nest *n);
 
 };
 

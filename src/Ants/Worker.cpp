@@ -10,6 +10,8 @@ Worker::Worker(Nest *n):
         Ant(*n)
 {
     nest = n;
+    cout << "instanciation Worker" << endl;
+
 }
 
 void Worker::die() {

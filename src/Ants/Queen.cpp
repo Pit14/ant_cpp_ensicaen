@@ -9,6 +9,7 @@ Queen::Queen(Nest *n):
     Ant(*n)
 {
     nest = n;
+    age = 0;
 }
 
 void Queen::update(){
@@ -16,16 +17,16 @@ void Queen::update(){
 
     eat();
 
-    if(this->age > 0){
+    if(age > 0){
         give_birth();
     }else{
-        // nouvelle fourmi scout        this.nest.ants.push();
+        nest->add_ant(new Scout(nest));
     }
-
+    age++;
 }
 
 void Queen::eat(){
-    cout << "mange" << nest->getFood() << endl;
+    //cout << "mange" << nest->getFood() << endl;
 
     if(nest->getFood() > 0.01){
          nest->setFood(nest->getFood()- 0.01);
@@ -36,7 +37,7 @@ void Queen::eat(){
 
 void Queen::die(){
     //end of simulation
-    cout << "End simulation" << endl;
+   // cout << "End simulation" << endl;
 
 }
 
@@ -46,11 +47,11 @@ void Queen::give_birth(){
 
     if(random <= 80) {
         nest->add_ant(new Worker(nest));
-        //return new Worker();
     } else if(random <= 95) {
-       // return new Soldier(new Coord(0,0),new Coord*,0,0);
+       // nest->add_ant(new Soldier(nest));
+
     }else{
-      //  return new Scout();
+        nest->add_ant(new Scout(nest));
     }
 
 }
