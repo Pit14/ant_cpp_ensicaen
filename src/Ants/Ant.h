@@ -15,7 +15,7 @@ class Nest;
 class Ant {
 
 public:
-    Ant(Coord = {0,0}, int = 0);
+    Ant(Nest n, Coord = {0,0}, int = 0);
 
     virtual ~Ant();
 

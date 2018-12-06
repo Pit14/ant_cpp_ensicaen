@@ -72,7 +72,7 @@ void Grid::print_grid(){
 
     while(window.isOpen()) {
         window.clear();
-        nest->update();
+        nest->update_nest();
         loadSprite(window);
 
 
@@ -322,7 +322,6 @@ void Grid::Initialize() {
 
     //we create the nest
     nest = new Nest();
-    nest->add_ant(new Queen());
 
 
 

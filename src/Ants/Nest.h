@@ -19,7 +19,7 @@ public:
 
     Nest();
 
-   void update();
+   void update_nest();
 
     void setAnts(const list<Ant*> &ants);
 

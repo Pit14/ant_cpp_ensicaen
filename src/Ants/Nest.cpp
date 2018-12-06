@@ -11,15 +11,15 @@ Nest::Nest() {
 
 }
 
-void Nest::update() {
-//    Queen *queen = new Queen();
-//    ants.push_back(queen);
-//    for(std::list<Ant*>::iterator it = ants.begin(); it!=ants.end(); ++it)
-//    {
-//        (*it)->update();
-//    }
+void Nest::update_nest() {
+    Queen *queen = new Queen(this);
+    ants.push_back(queen);
+    for(std::list<Ant*>::iterator it = ants.begin(); it!=ants.end(); ++it)
+    {
+        (*it)->update();
+    }
 
-std::cout << "cc" << endl;
+//std::cout << "cc" << endl;
 }
 
 const list<Ant *> &Nest::getAnts() const {

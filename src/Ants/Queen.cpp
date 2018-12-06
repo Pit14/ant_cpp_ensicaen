@@ -5,14 +5,14 @@
 #include "Queen.h"
 #include "Nest.h"
 
-Queen::Queen():
-    Ant()
+Queen::Queen(Nest *n):
+    Ant(*n)
 {
-
+    nest = n;
 }
 
 void Queen::update(){
-    std::cout << "test" << std::endl;
+//    std::cout << "test" << std::endl;
 
     eat();
 
@@ -25,8 +25,10 @@ void Queen::update(){
 }
 
 void Queen::eat(){
-    if(nest->getFood() < 0.01){
-        nest->setFood(nest->getFood()- 0.01);
+    cout << "mange" << nest->getFood() << endl;
+
+    if(nest->getFood() > 0.01){
+         nest->setFood(nest->getFood()- 0.01);
     }else{
         this->die();
     }
@@ -34,6 +36,8 @@ void Queen::eat(){
 
 void Queen::die(){
     //end of simulation
+    cout << "End simulation" << endl;
+
 }
 
 void Queen::give_birth(){

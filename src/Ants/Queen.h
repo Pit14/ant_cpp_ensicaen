@@ -15,7 +15,7 @@
 class Queen:public Ant {
 
 public:
-    Queen();
+    Queen(Nest *n);
 
     virtual void update();
     virtual void eat();
