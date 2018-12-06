@@ -6,18 +6,20 @@
 #define PROJECT_NEST_H
 
 #include <list>
+#include <iostream>
 #include "Ant.h"
 
 class Nest {
 
 protected :
-    void Simulate();
     list<Ant*> ants;
     double food;
 
 public:
 
     Nest();
+
+   void update();
 
     void setAnts(const list<Ant*> &ants);
 
@@ -26,6 +28,8 @@ public:
     const list<Ant *> &getAnts() const;
 
     double getFood() const;
+
+    void add_ant(Ant* a);
 };
 
 

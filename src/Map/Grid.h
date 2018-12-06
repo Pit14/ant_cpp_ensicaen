@@ -7,6 +7,7 @@
 
 #include "Cell.h"
 #include "../define.h"
+#include "../Ants/Nest.h"
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics.hpp>
@@ -39,6 +40,9 @@ public:
     sf::Texture gazon;
     sf::Texture colony;
     sf::Texture rock;
+
+private:
+    Nest *nest;
 
 };
 

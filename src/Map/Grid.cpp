@@ -11,6 +11,7 @@
 #include "Grid.h"
 #include "Cell.h"
 #include "../Ants/Queen.h"
+#include "../Ants/Nest.h"
 
 
 Grid::Grid()
@@ -71,6 +72,7 @@ void Grid::print_grid(){
 
     while(window.isOpen()) {
         window.clear();
+        nest->update();
         loadSprite(window);
 
 
@@ -318,9 +320,11 @@ void Grid::Initialize() {
         }
     }
 
-    //we spawn the queen
+    //we create the nest
+    nest = new Nest();
+    nest->add_ant(new Queen());
 
-    Queen *queen = new Queen();
+
 
 
 }

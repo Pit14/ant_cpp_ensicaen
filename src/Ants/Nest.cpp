@@ -3,6 +3,7 @@
 //
 
 #include "Nest.h"
+#include "Queen.h"
 
 Nest::Nest() {
 
@@ -10,11 +11,15 @@ Nest::Nest() {
 
 }
 
-void Nest::Simulate() {
-    for(list<Ant*>::iterator it = ants.begin(); it!=ants.end(); ++it)
-    {
+void Nest::update() {
+//    Queen *queen = new Queen();
+//    ants.push_back(queen);
+//    for(std::list<Ant*>::iterator it = ants.begin(); it!=ants.end(); ++it)
+//    {
+//        (*it)->update();
+//    }
 
-    }
+std::cout << "cc" << endl;
 }
 
 const list<Ant *> &Nest::getAnts() const {
@@ -31,4 +36,8 @@ void Nest::setAnts(const list<Ant *> &ants) {
 
 void Nest::setFood(double food) {
     Nest::food = food;
+}
+
+void Nest::add_ant(Ant *a) {
+    ants.push_back(a);
 }
