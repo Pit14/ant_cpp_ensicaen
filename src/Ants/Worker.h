@@ -11,10 +11,12 @@ using namespace std;
 
 class Worker: public Ant {
 
+protected:
     bool is_minor;
     bool is_carriyng_food;
     int pheromone = 500;
 
+public:
     void pick_up_food();
     void die();
     void drop_food();
