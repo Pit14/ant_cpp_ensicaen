@@ -11,11 +11,17 @@ using namespace std;
 #include "BadAnt.h"
 
 class Soldier: public Ant {
+
+protected:
     bool is_returning_to_the_nest;
-    void kill(BadAnt b);
 
 public:
-
+    void kill(BadAnt b);
+    virtual void die();
+    void move(Coord c);
+    virtual void eat();
+    virtual void update();
+    Soldier(Nest *n);
 };
 
 

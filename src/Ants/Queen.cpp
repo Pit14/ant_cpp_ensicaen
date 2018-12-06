@@ -9,12 +9,10 @@ Queen::Queen(Nest *n):
     Ant(*n)
 {
     nest = n;
-    age = 0;
 }
 
 void Queen::update(){
 //    std::cout << "test" << std::endl;
-
     eat();
 
     if(age > 0){
@@ -48,8 +46,7 @@ void Queen::give_birth(){
     if(random <= 80) {
         nest->add_ant(new Worker(nest));
     } else if(random <= 95) {
-       // nest->add_ant(new Soldier(nest));
-
+        nest->add_ant(new Soldier(nest));
     }else{
         nest->add_ant(new Scout(nest));
     }
