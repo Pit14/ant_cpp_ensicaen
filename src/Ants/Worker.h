@@ -18,10 +18,13 @@ protected:
 
 public:
     void pick_up_food();
-    void die();
+    virtual void die();
     void drop_food();
     void move(Coord c);
-    void live();
+    virtual void eat();
+    virtual void update();
+    Worker(Nest *n);
+
 
 };
 

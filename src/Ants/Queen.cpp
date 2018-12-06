@@ -45,7 +45,7 @@ void Queen::give_birth(){
     int random = rand() % 100 + 1;
 
     if(random <= 80) {
-        nest->add_ant(new Worker());
+        nest->add_ant(new Worker(nest));
         //return new Worker();
     } else if(random <= 95) {
        // return new Soldier(new Coord(0,0),new Coord*,0,0);
