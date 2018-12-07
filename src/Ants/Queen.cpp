@@ -14,10 +14,13 @@ Queen::Queen(Nest *n):
 void Queen::update(){
 //    std::cout << "test" << std::endl;
     eat();
+//    std::cout << age << std::endl;
 
     if(age > 0){
-        give_birth();
+       // give_birth();
     }else{
+        nest->add_ant(new Scout(nest));
+        nest->add_ant(new Scout(nest));
         nest->add_ant(new Scout(nest));
     }
     age++;

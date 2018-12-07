@@ -321,7 +321,7 @@ void Grid::Initialize() {
     }
 
     //we create the nest
-    nest = new Nest();
+    nest = new Nest(array);
 
 
 
