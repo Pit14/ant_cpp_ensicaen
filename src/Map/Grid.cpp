@@ -342,6 +342,7 @@ void Grid::Initialize() {
     //we create the nest
    // nest = new Nest(array);
 
+    nest = new Nest(array);
 
 
 

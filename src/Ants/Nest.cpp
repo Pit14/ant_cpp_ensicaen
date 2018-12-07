@@ -5,21 +5,18 @@
 #include "Nest.h"
 #include "Queen.h"
 
-Nest::Nest() {
-
+Nest::Nest(Cell ** m) {
     food = 2;
-
+    map = m;
+    Queen *queen = new Queen(this);
+    ants.push_back(queen);
 }
 
 void Nest::update_nest() {
-    Queen *queen = new Queen(this);
-    ants.push_back(queen);
     for(std::list<Ant*>::iterator it = ants.begin(); it!=ants.end(); ++it)
     {
         (*it)->update();
     }
-
-//std::cout << "cc" << endl;
 }
 
 const list<Ant *> &Nest::getAnts() const {
@@ -40,4 +37,12 @@ void Nest::setFood(double food) {
 
 void Nest::add_ant(Ant *a) {
     ants.push_back(a);
+}
+
+Cell **Nest::getMap() const {
+    return map;
+}
+
+void Nest::setMap(Cell **map) {
+    Nest::map = map;
 }

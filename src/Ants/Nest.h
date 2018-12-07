@@ -8,16 +8,18 @@
 #include <list>
 #include <iostream>
 #include "Ant.h"
+#include "../Map/Cell.h"
 
 class Nest {
 
 protected :
     list<Ant*> ants;
     double food;
+    Cell ** map;
 
 public:
 
-    Nest();
+    Nest(Cell ** map);
 
    void update_nest();
 
@@ -30,6 +32,10 @@ public:
     double getFood() const;
 
     void add_ant(Ant* a);
+
+    Cell **getMap() const;
+
+    void setMap(Cell **map);
 };
 
 

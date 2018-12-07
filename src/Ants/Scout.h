@@ -13,6 +13,7 @@ class Scout: public Ant {
 public:
     virtual void die();
     void move(Coord c);
+    void find_move();
     virtual void eat();
     virtual void update();
     Scout(Nest *n);
