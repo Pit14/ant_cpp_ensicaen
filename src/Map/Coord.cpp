@@ -7,6 +7,8 @@ using namespace std;
 
 Coord::Coord(int x, int y) {}
 
+Coord::Coord() = default;
+
 Coord::~Coord() = default;
 
 int Coord::getX() const {

@@ -10,6 +10,9 @@ Ant::~Ant() {
 
 }
 
-Ant::Ant(Nest n, Coord current_coord, int age) : current_coord(current_coord),
-                                                age(age),
-                                                nest(&n) {}
+Ant::Ant(Nest n, Coord current_coord, int age) : current_coord(current_coord),age(age),nest(&n) {}
+
+
+Coord Ant::getCoord() {
+    return current_coord;
+}

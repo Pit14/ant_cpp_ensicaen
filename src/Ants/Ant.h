@@ -16,6 +16,7 @@ class Ant {
 
 public:
     Ant(Nest n, Coord = {0,0}, int = 0);
+    Coord getCoord();
 
     virtual ~Ant();
 

@@ -13,8 +13,8 @@ int main(){
     Grid* g = new Grid();
     g->Initialize();
 
-    g->array[0][9].food = 5;
-    g->array[3][3].food = 9;
+  /*  g->array[0][9].food = 5;
+    g->array[3][3].food = 9;*/
     // printf(g);
     g->create_original_colony();
     g->generate();

@@ -19,13 +19,18 @@ public:
     void TakeFood();
     void EatFood(int value);
     friend void setValue(Cell &, Coord* current_coord, float food, int phero, int current_ants,state_cell state);
+    state_cell getState();
+    void setState(state_cell states);
+    void setFood(float foods);
+    void setVisible();
 
-
+protected:
     Coord* current_coord;
     float food;
     int phero;
     int current_ants;
     state_cell state;
+    bool hide;
 
 };
 

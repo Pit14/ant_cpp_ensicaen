@@ -28,6 +28,7 @@ Grid::Grid()
     gazon.loadFromFile("../src/pic/pelouse.jpg");
     colony.loadFromFile("../src/pic/colony.jpg");
     rock.loadFromFile("../src/pic/rock.png");
+    fog.loadFromFile("../src/pic/black.jpg");
 }
 
 
@@ -37,21 +38,33 @@ void Grid::loadSprite(sf::RenderWindow &window) {
     for (int y(0); y < HEIGHT; y++) {
         for (int x(0); x < WIDTH; x++) {
 
+         /*   if (array[x][y].hide == true) {
+                sprites.setTexture(fog);
+            } else {*/
 
-
-            if (array[x][y].state == BLOCKED)
-                sprites.setTexture(rock);
-            else if (array[x][y].state == FOOD)
-                sprites.setTexture(bouffe);
-            else if (array[x][y].state == COLONY)
-                sprites.setTexture(colony);
-            else
-                sprites.setTexture(gazon);
+                if (array[x][y].getState() == BLOCKED)
+                    sprites.setTexture(rock);
+                else if (array[x][y].getState() == FOOD)
+                    sprites.setTexture(bouffe);
+                else if (array[x][y].getState() == COLONY)
+                    sprites.setTexture(colony);
+                else
+                    sprites.setTexture(gazon);
+         //   }
 
             sprites.setTextureRect(sf::IntRect(0, 0, 100, 100));
             sprites.setPosition(32 * x + 1, 32 * y + 1);
             window.draw(sprites);
         }
+    }
+}
+void Grid::loadAnts(sf::RenderWindow &window, list<Ant*> ants) {
+
+   Coord *temp = new Coord();
+    for(std::list<Ant*>::iterator it = ants.begin(); it!=ants.end(); ++it)
+    {
+        *temp = (*it)->getCoord();
+
     }
 }
 void Grid::print_grid(){
@@ -66,14 +79,19 @@ void Grid::print_grid(){
 
     float zoom = 1;
 
+    list<Ant*> ants;
+
     // Retrieve the window's default view
     sf::View view = window.getDefaultView();
+   // view.setCenter((WIDTH*HEIGHT)/2,(WIDTH*HEIGHT)/2);
 
 
     while(window.isOpen()) {
         window.clear();
         nest->update_nest();
+        ants = nest->getAnts();
         loadSprite(window);
+        loadAnts(window, ants);
 
 
         sf::Event event;
@@ -154,19 +172,19 @@ bool Grid::isOutOfLimit( int x, int y) {
 bool Grid::noNeighbour( int x, int y) {
 
     if (!isOutOfLimit(x-1,y)) {
-        if (array[x - 1][y].state == BLOCKED)
+        if (array[x - 1][y].getState() == BLOCKED)
             return false;
     }
     if(!isOutOfLimit(x+1,y)) {
-        if (array[x + 1][y].state == BLOCKED)
+        if (array[x + 1][y].getState() == BLOCKED)
             return false;
     }
     if(!isOutOfLimit(x,y+1)) {
-        if (array[x][y + 1].state == BLOCKED)
+        if (array[x][y + 1].getState() == BLOCKED)
             return false;
     }
     if(!isOutOfLimit(x,y-1)) {
-        if (array[x][y - 1].state == BLOCKED)
+        if (array[x][y - 1].getState() == BLOCKED)
             return false;
     }
   //  cout <<  "no voisin" << endl;
@@ -174,7 +192,7 @@ bool Grid::noNeighbour( int x, int y) {
 }
 bool Grid::isFree(int x, int y) {
     if (!isOutOfLimit(x,y)) {
-        if (array[x][y].state == FREE) {
+        if (array[x][y].getState() == FREE) {
         //    cout << "free" << endl;
 
             return true;
@@ -189,11 +207,11 @@ bool Grid::recursive(int x, int y, int size_food, previous_pos old,int food_valu
     if (isFree(x,y)){
 
 
-            array[x][y].state = GHOST_FOOD;
+            array[x][y].setState(GHOST_FOOD);
             if (size_food == 1) {
                 //cout << x << " " << y << "food" << endl;
-                array[x][y].state = FOOD;
-                array[x][y].food = food_value;
+                array[x][y].setState(FOOD);
+                array[x][y].setFood(food_value);
                 return true;
             }
             if (old != LEFT )
@@ -206,11 +224,11 @@ bool Grid::recursive(int x, int y, int size_food, previous_pos old,int food_valu
                 isOk = recursive(x,y+1,size_food-1,TOP,2000);
 
             if (isOk) {
-                array[x][y].state = FOOD;
+                array[x][y].setState(FOOD);
                 //cout << x << " " << y << "food" << endl;
                 return true;
             }
-            array[x][y].state = FREE;
+            array[x][y].setState(FREE);
 
     }
 
@@ -222,10 +240,10 @@ bool Grid::recursive(int x, int y, int size_rock, previous_pos old ) {
     if (isFree(x,y)){
         if (noNeighbour(x,y)) {
 
-            array[x][y].state = GHOST_ROCK;
+            array[x][y].setState(GHOST_ROCK);
             if (size_rock == 1) {
                 //cout << x << " " << y << "blocked" << endl;
-                array[x][y].state = BLOCKED;
+                array[x][y].setState(BLOCKED);
                 return true;
             }
             if (old != LEFT )
@@ -238,11 +256,11 @@ bool Grid::recursive(int x, int y, int size_rock, previous_pos old ) {
                 isOk = recursive(x,y+1,size_rock-1,TOP);
 
             if (isOk) {
-                array[x][y].state = BLOCKED;
+                array[x][y].setState(BLOCKED);
                 //cout << x << " " << y << "blocked" << endl;
                 return true;
             }
-            array[x][y].state = FREE;
+            array[x][y].setState(FREE);
         }
     }
 
@@ -304,7 +322,8 @@ void Grid::create_original_colony() {
 
     int x = (int) round(WIDTH/2);
     int y = (int) round(HEIGHT/2);
-    array[x][y].state = COLONY;
+    array[x][y].setState(COLONY);
+    array[x][y].setVisible();
 }
 void Grid::Initialize() {
 
@@ -321,7 +340,8 @@ void Grid::Initialize() {
     }
 
     //we create the nest
-    nest = new Nest();
+   // nest = new Nest(array);
+
 
 
 
