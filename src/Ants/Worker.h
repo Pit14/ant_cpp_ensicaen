@@ -20,7 +20,7 @@ public:
     void pick_up_food();
     virtual void die();
     void drop_food();
-    void move(Coord c);
+    void move(Coord *c);
     virtual void eat();
     virtual void update();
     Worker(Nest *n);

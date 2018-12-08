@@ -28,8 +28,9 @@ void Worker::drop_food() {
     is_carriyng_food = false;
 }
 
-void Worker::move(Coord c) {
-    current_coord = c;
+void Worker::move(Coord *c) {
+    current_coord.setY(c->getY());
+    current_coord.setX(c->getX());
 }
 
 void Worker::update(){

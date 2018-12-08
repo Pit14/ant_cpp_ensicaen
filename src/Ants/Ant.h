@@ -9,13 +9,15 @@ using namespace std;
 
 #include "../Map/Coord.h"
 #include <stack>
+#include <cmath>
+#include "../define.h"
 
 class Nest;
 
 class Ant {
 
 public:
-    Ant(Nest n, Coord = {0,0}, int = 0);
+    Ant(Nest n, Coord = {(int) round(HEIGHT/2),(int) round(WIDTH/2)}, int = 0);
     Coord getCoord();
 
     virtual ~Ant();

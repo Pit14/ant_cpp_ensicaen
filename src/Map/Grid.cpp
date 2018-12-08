@@ -60,7 +60,7 @@ void Grid::loadSprite(sf::RenderWindow &window) {
 }
 void Grid::loadAnts(sf::RenderWindow &window, list<Ant*> ants) {
 
-   Coord *temp = new Coord();
+   Coord *temp = new Coord(0,0);
     for(std::list<Ant*>::iterator it = ants.begin(); it!=ants.end(); ++it)
     {
         *temp = (*it)->getCoord();
@@ -343,8 +343,6 @@ void Grid::Initialize() {
    // nest = new Nest(array);
 
     nest = new Nest(array);
-
-
 
 
 }

@@ -10,7 +10,7 @@ using namespace std;
 class Coord {
 public:
     Coord(int x, int y);
-    Coord();
+    //Coord();
 
     virtual ~Coord();
 

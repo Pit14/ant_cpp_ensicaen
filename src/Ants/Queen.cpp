@@ -20,8 +20,8 @@ void Queen::update(){
        // give_birth();
     }else{
         nest->add_ant(new Scout(nest));
-        nest->add_ant(new Scout(nest));
-        nest->add_ant(new Scout(nest));
+        //nest->add_ant(new Scout(nest));
+      //  nest->add_ant(new Scout(nest));
     }
     age++;
 }
