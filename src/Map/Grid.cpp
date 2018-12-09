@@ -53,7 +53,7 @@ void Grid::loadSprite(sf::RenderWindow &window) {
          //   }
 
             sprites.setTextureRect(sf::IntRect(0, 0, 100, 100));
-            sprites.setPosition(32 * x + 1, 32 * y + 1);
+            sprites.setPosition(32 * x, 32 * y);
             window.draw(sprites);
         }
     }
@@ -64,6 +64,11 @@ void Grid::loadAnts(sf::RenderWindow &window, list<Ant*> ants) {
     for(std::list<Ant*>::iterator it = ants.begin(); it!=ants.end(); ++it)
     {
         *temp = (*it)->getCoord();
+        sprites.setTexture(fourmis);
+        sprites.setTextureRect(sf::IntRect(0, 0, 100, 100));
+        sprites.setPosition(32 * temp->getX() , 32 * temp->getY() );
+        window.draw(sprites);
+
 
     }
 }
@@ -92,7 +97,7 @@ void Grid::print_grid(){
         ants = nest->getAnts();
         loadSprite(window);
         loadAnts(window, ants);
-
+    // fonction update nest fait planter le zoom
 
         sf::Event event;
         while (window.pollEvent(event)) {
