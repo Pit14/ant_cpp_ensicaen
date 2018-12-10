@@ -65,7 +65,7 @@ void Grid::loadAnts(sf::RenderWindow &window, list<Ant*> ants) {
     {
         *temp = (*it)->getCoord();
         sprites.setTexture(fourmis);
-        sprites.setTextureRect(sf::IntRect(0, 0, 100, 100));
+        sprites.setTextureRect(sf::IntRect(0, 0, 32, 32));
         sprites.setPosition(32 * temp->getX() , 32 * temp->getY() );
         window.draw(sprites);
 
