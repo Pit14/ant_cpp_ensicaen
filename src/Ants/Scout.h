@@ -17,6 +17,7 @@ public:
     virtual void eat();
     virtual void update();
     Scout(Nest *n);
+    void setC(Coord *c,int x, int y);
 
 };
 
