@@ -16,3 +16,11 @@ Ant::Ant(Nest n, Coord current_coord, int age) : current_coord(current_coord),ag
 Coord Ant::getCoord() {
     return current_coord;
 }
+
+int Ant::getAge() const {
+    return age;
+}
+
+void Ant::setAge(int age) {
+    Ant::age = age;
+}

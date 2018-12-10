@@ -10,7 +10,13 @@
 
 class Scout: public Ant {
 
+private:
+    bool is_minor;
 public:
+    bool isIs_minor() const;
+
+    void setIs_minor(bool is_minor);
+
     virtual void die();
     void move(Coord c);
     void find_move();

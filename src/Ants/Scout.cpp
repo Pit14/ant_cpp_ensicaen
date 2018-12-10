@@ -27,7 +27,8 @@ Scout::Scout(Nest *n):
 }
 
 void Scout::die() {
-
+    //nest->getAnts().remove(this);
+    //delete this;
 }
 
 void Scout::find_move() {
@@ -36,7 +37,6 @@ void Scout::find_move() {
     //cout <<  "Random : " << rand_dir << endl;
 
     Coord *c;// = new Coord(1,1);
-
 
     switch(rand_dir) { // left
 
@@ -126,9 +126,30 @@ void Scout::move(Coord c) {
 }
 
 void Scout::update(){
-    // eat();
-    find_move();
+
+    setAge(getAge() + 1);
+
+    if(!is_minor) {
+        if (getAge() > LIFE_EXPECTANCY) {
+            die();
+        }
+        // eat();
+        find_move();
+    }else{
+        if(getAge()>=2){
+            setIs_minor(false);
+        }
+        //eat();
+    }
 }
 void Scout::eat(){
     cout << "scout mange" << nest->getFood() << endl;
+}
+
+bool Scout::isIs_minor() const {
+    return is_minor;
+}
+
+void Scout::setIs_minor(bool is_minor) {
+    Scout::is_minor = is_minor;
 }
