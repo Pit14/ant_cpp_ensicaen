@@ -24,6 +24,7 @@ public:
     virtual void update();
     Scout(Nest *n);
     void setC(Coord *c,int x, int y);
+    void discoverMap(int x,int y);
 
 };
 

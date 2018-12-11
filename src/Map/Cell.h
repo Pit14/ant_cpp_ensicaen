@@ -23,6 +23,7 @@ public:
     void setState(state_cell states);
     void setFood(float foods);
     void setVisible();
+    bool getHide();
 
 protected:
     Coord* current_coord;

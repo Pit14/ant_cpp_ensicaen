@@ -24,6 +24,10 @@ void Cell::setState(state_cell states) {
 void Cell::setVisible() {
     hide = false;
 }
+
+bool Cell::getHide(){
+    return hide;
+}
 void Cell::setFood(float foods) {
     food = foods;
 }

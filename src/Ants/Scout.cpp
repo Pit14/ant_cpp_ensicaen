@@ -49,7 +49,7 @@ void Scout::find_move() {
             cout << m[c->getX(), c->getY()]->getState() << endl;
 
 
-            if (m[c->getX(), c->getY()]->getState() == FREE) {
+            if (m[c->getX()][c->getY()].getState() == FREE) {
                 //cout <<  "before move : " << endl;
                 //            cout <<  "get y current_coord : " << ( current_coord.getY()) << endl;
                 //            cout <<  "get x current coord : " << current_coord.getX() << endl;
@@ -63,49 +63,49 @@ void Scout::find_move() {
         case 2 :
             c->setY(current_coord.getY() - 1);
             c->setX(current_coord.getX());
-            if (m[c->getX(), c->getY()]->getState() == FREE) {
+            if (m[c->getX()][c->getY()].getState() == FREE) {
                 move(*c);
             }
             break;
         case 3 :
             c->setY(current_coord.getY() - 1);
             c->setX(current_coord.getX()+1);
-            if (m[c->getX(), c->getY()]->getState() == FREE) {
+            if (m[c->getX()][c->getY()].getState() == FREE) {
                 move(*c);
             }
             break;
         case 4 :
             c->setY(current_coord.getY());
             c->setX(current_coord.getX()-1);
-            if (m[c->getX(), c->getY()]->getState() == FREE) {
+            if (m[c->getX()][c->getY()].getState() == FREE) {
                 move(*c);
             }
             break;
         case 5 :
             c->setY(current_coord.getY());
             c->setX(current_coord.getX()+1);
-            if (m[c->getX(), c->getY()]->getState() == FREE) {
+            if (m[c->getX()][c->getY()].getState() == FREE) {
                 move(*c);
             }
             break;
         case 6 :
             c->setY(current_coord.getY()+1);
             c->setX(current_coord.getX()-1);
-            if (m[c->getX(), c->getY()]->getState() == FREE) {
+            if (m[c->getX()][c->getY()].getState() == FREE) {
                 move(*c);
             }
             break;
         case 7 :
             c->setY(current_coord.getY() +1);
             c->setX(current_coord.getX());
-            if (m[c->getX(), c->getY()]->getState() == FREE) {
+            if (m[c->getX()][c->getY()].getState() == FREE) {
                 move(*c);
             }
             break;
         case 8 :
             c->setY(current_coord.getY() +1);
             c->setX(current_coord.getX()+1);
-            if (m[c->getX(), c->getY()]->getState() == FREE) {
+            if (m[c->getX()][c->getY()].getState() == FREE) {
                 move(*c);
             }
             break;
@@ -118,9 +118,33 @@ void Scout::setC(Coord *c,int x,int y){
     c->setX(x);
 }
 
+void Scout::discoverMap(int x,int y) {
+    Cell ** m = nest->getMap();
+
+    m[x-1][y].setVisible();
+    m[x-1][y+1].setVisible();
+    m[x-1][y-1].setVisible();
+
+    m[x][y].setVisible();
+    m[x][y+1].setVisible();
+    m[x][y-1].setVisible();
+
+    m[x+1][y].setVisible();
+    m[x+1][y+1].setVisible();
+    m[x+1][y-1].setVisible();
+
+}
+
 void Scout::move(Coord c) {
+
+
+    cout << "old " << current_coord.getX() << current_coord.getY() << endl;
     current_coord.setX(c.getX());
     current_coord.setY(c.getY());
+
+    discoverMap(current_coord.getX(), current_coord.getY());
+    cout << "new " << current_coord.getX() << current_coord.getY() << endl;
+    cout << nest->getMap()[current_coord.getX()][current_coord.getY()].getState() << endl;
     cout <<  "scout moved !" << endl;
 
 }

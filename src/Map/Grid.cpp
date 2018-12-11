@@ -10,6 +10,8 @@
 #include <zconf.h>
 #include "Grid.h"
 #include "Cell.h"
+#include <chrono>
+#include <thread>
 #include "../Ants/Queen.h"
 #include "../Ants/Nest.h"
 
@@ -38,9 +40,9 @@ void Grid::loadSprite(sf::RenderWindow &window) {
     for (int y(0); y < HEIGHT; y++) {
         for (int x(0); x < WIDTH; x++) {
 
-         /*   if (array[x][y].hide == true) {
+            if (array[x][y].getHide() == true) {
                 sprites.setTexture(fog);
-            } else {*/
+            } else {
 
                 if (array[x][y].getState() == BLOCKED)
                     sprites.setTexture(rock);
@@ -50,7 +52,7 @@ void Grid::loadSprite(sf::RenderWindow &window) {
                     sprites.setTexture(colony);
                 else
                     sprites.setTexture(gazon);
-         //   }
+            }
 
             sprites.setTextureRect(sf::IntRect(0, 0, 100, 100));
             sprites.setPosition(32 * x, 32 * y);
@@ -76,7 +78,8 @@ void Grid::print_grid(){
 
 
 
-    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
+    sf::RenderWindow window(sf::VideoMode(400,400),"my screen");
+
     window.setFramerateLimit(30);
     //window.setFramerateLimit(100);
     sf::Vector2f oldPos;
@@ -92,11 +95,13 @@ void Grid::print_grid(){
 
 
     while(window.isOpen()) {
+
         window.clear();
         nest->update_nest();
         ants = nest->getAnts();
         loadSprite(window);
         loadAnts(window, ants);
+        //std::this_thread::sleep_for(std::chrono::milliseconds(500));
     // fonction update nest fait planter le zoom
 
         sf::Event event;
