@@ -10,12 +10,9 @@ Worker::Worker(Nest *n):
         Ant(*n)
 {
     nest = n;
-
+    is_carriyng_food = false;
     current_coord.setY(round(HEIGHT/2));
     current_coord.setX(round(WIDTH/2));
-
-    cout << "instanciation Worker" << endl;
-
 }
 
 /***
@@ -40,6 +37,11 @@ void Worker::drop_food() {
 void Worker::move(int x, int y) {
     current_coord.setX(x);
     current_coord.setY(y);
+    Coord *c = new Coord(x,y);
+//    c->setX(x);
+//    c->setY(y);
+    path_to_nest.push(*c);
+
 }
 
 /***
@@ -48,6 +50,7 @@ void Worker::move(int x, int y) {
  */
 void Worker::update(){
     setAge(getAge() + 1);
+    int x,y;
 
     if (getAge() > LIFE_EXPECTANCY) {
         die();
@@ -55,7 +58,13 @@ void Worker::update(){
         eat(); // we eat wether we're minor or major
 
         if(!is_minor) { // is not minor
-            find_move();
+            if(!is_carriyng_food){ // if we are not carrying food we move.
+                find_move();
+            }else{
+                if(!path_to_nest.empty()){
+                    move(path_to_nest.top().getX(),path_to_nest.top().getY());
+                }
+            }
         }else{ // is minor
             if(getAge()>= WORKER_MINOR_DAY){
                 setIs_minor(false);
@@ -66,7 +75,8 @@ void Worker::update(){
 
 
 /***
- * will check if the coord is off limit, and if it's not, the ant will move on the cell corresponding
+ * will check if the coord is not off limit, and if it's already have been discovered by a scout,
+ * if so, the ant will move on the cell corresponding
  * @param x : coord to wich you want to move
  * @param y : coord to wich you want to move
  * @param m : pointer pointing at the map
@@ -74,9 +84,15 @@ void Worker::update(){
 bool Worker::try_to_move(int x,int y, Cell ** m){
 
     if(!Grid::isOutOfLimit(x,y)) {
-        if (m[x][y].getState() != BLOCKED) {
-            move(x,y);
-            return true;
+        if (m[x][y].getState() != BLOCKED && !m[x][y].getHide() ) {
+                move(x, y);
+                if(m[x][y].getState() == FOOD){
+                    cout << "FOOD" << endl;
+                    path_to_nest.pop();
+                    is_carriyng_food == true;
+                    m[x][y].TakeFood();
+                }
+                return true;
         }
     }
     return false;
