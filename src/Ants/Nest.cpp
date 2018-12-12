@@ -6,7 +6,7 @@
 #include "Queen.h"
 
 Nest::Nest(Cell ** m) {
-    food = 2;
+    food = INITIAL_FOOD_ON_NEST;
     map = m;
     Queen *queen = new Queen(this);
     ants.push_back(queen);

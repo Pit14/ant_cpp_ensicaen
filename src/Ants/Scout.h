@@ -14,17 +14,16 @@ class Scout: public Ant {
 private:
     bool is_minor;
 public:
-    bool isIs_minor() const;
 
     void setIs_minor(bool is_minor);
 
     virtual void die();
-    void move(Coord c);
+    void move(int x, int y);
     void find_move();
     virtual void eat();
     virtual void update();
     Scout(Nest *n);
-    void setC(Coord *c,int x, int y);
+    bool try_to_move(int x, int y,Cell ** m);
     void discoverMap(int x,int y);
     void discoverMapLoop(int x,int y);
 
