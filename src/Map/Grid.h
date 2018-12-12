@@ -25,7 +25,7 @@ public:
     void create_food(double number_of_food, int size_food, int food_value);
     bool isFree(int x, int y);
     bool noNeighbour (int x, int y);
-    bool isOutOfLimit(int x, int y);
+    static bool isOutOfLimit(int x, int y);
     bool recursive(int x, int y, int size_rock, previous_pos old );
     bool recursive(int x, int y,int size_rock, previous_pos old , int food_value);
     void print_grid ();

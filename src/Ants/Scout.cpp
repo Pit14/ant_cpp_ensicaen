@@ -46,67 +46,82 @@ void Scout::find_move() {
 
             //cout <<  "m15 : " << m[15,15]->getState() << endl;
 
-            cout << m[c->getX(), c->getY()]->getState() << endl;
 
 
-            if (m[c->getX()][c->getY()].getState() == FREE) {
-                //cout <<  "before move : " << endl;
-                //            cout <<  "get y current_coord : " << ( current_coord.getY()) << endl;
-                //            cout <<  "get x current coord : " << current_coord.getX() << endl;
-                //
-                //            cout <<  "get y c : " << c->getY() << endl;
-                //            cout <<  "get x c : " << c->getX() << endl;
+            if(!Grid::isOutOfLimit(c->getX(),c->getY())) {
+                if (m[c->getX()][c->getY()].getState() != BLOCKED) {
+                    //cout <<  "before move : " << endl;
+                    //            cout <<  "get y current_coord : " << ( current_coord.getY()) << endl;
+                    //            cout <<  "get x current coord : " << current_coord.getX() << endl;
+                    //
+                    //            cout <<  "get y c : " << c->getY() << endl;
+                    //            cout <<  "get x c : " << c->getX() << endl;
 
-                move(*c);
+                    move(*c);
+                }
             }
             break;
         case 2 :
             c->setY(current_coord.getY() - 1);
             c->setX(current_coord.getX());
-            if (m[c->getX()][c->getY()].getState() == FREE) {
-                move(*c);
+            if(!Grid::isOutOfLimit(c->getX(),c->getY())) {
+                if (m[c->getX()][c->getY()].getState() != BLOCKED) {
+                    move(*c);
+                }
             }
             break;
         case 3 :
             c->setY(current_coord.getY() - 1);
             c->setX(current_coord.getX()+1);
-            if (m[c->getX()][c->getY()].getState() == FREE) {
-                move(*c);
+            if(!Grid::isOutOfLimit(c->getX(),c->getY())) {
+                if (m[c->getX()][c->getY()].getState() != BLOCKED) {
+                    move(*c);
+                }
             }
             break;
         case 4 :
             c->setY(current_coord.getY());
             c->setX(current_coord.getX()-1);
-            if (m[c->getX()][c->getY()].getState() == FREE) {
-                move(*c);
+            if(!Grid::isOutOfLimit(c->getX(),c->getY())) {
+                if (m[c->getX()][c->getY()].getState() != BLOCKED) {
+                    move(*c);
+                }
             }
             break;
         case 5 :
             c->setY(current_coord.getY());
             c->setX(current_coord.getX()+1);
-            if (m[c->getX()][c->getY()].getState() == FREE) {
-                move(*c);
+            if(!Grid::isOutOfLimit(c->getX(),c->getY())) {
+                if (m[c->getX()][c->getY()].getState() != BLOCKED) {
+                    move(*c);
+                }
             }
             break;
         case 6 :
             c->setY(current_coord.getY()+1);
             c->setX(current_coord.getX()-1);
-            if (m[c->getX()][c->getY()].getState() == FREE) {
-                move(*c);
+            if(!Grid::isOutOfLimit(c->getX(),c->getY())) {
+                if (m[c->getX()][c->getY()].getState() != BLOCKED) {
+                    move(*c);
+                }
             }
             break;
         case 7 :
             c->setY(current_coord.getY() +1);
             c->setX(current_coord.getX());
-            if (m[c->getX()][c->getY()].getState() == FREE) {
-                move(*c);
+            if(!Grid::isOutOfLimit(c->getX(),c->getY())) {
+                if (m[c->getX()][c->getY()].getState() != BLOCKED) {
+                    move(*c);
+                }
             }
             break;
         case 8 :
             c->setY(current_coord.getY() +1);
             c->setX(current_coord.getX()+1);
-            if (m[c->getX()][c->getY()].getState() == FREE) {
-                move(*c);
+            if(!Grid::isOutOfLimit(c->getX(),c->getY())) {
+                if (m[c->getX()][c->getY()].getState() != BLOCKED) {
+                    move(*c);
+                }
             }
             break;
     }
@@ -118,34 +133,39 @@ void Scout::setC(Coord *c,int x,int y){
     c->setX(x);
 }
 
-void Scout::discoverMap(int x,int y) {
+void Scout::discoverMap(int x, int y) {
+
     Cell ** m = nest->getMap();
+    if ( !Grid::isOutOfLimit(x,y) && m[x][y].getHide())
+        m[x][y].setVisible();
+}
+void Scout::discoverMapLoop(int x,int y) {
 
-    m[x-1][y].setVisible();
-    m[x-1][y+1].setVisible();
-    m[x-1][y-1].setVisible();
+    discoverMap(x-1,y);
+    discoverMap(x-1,y-1);
+    discoverMap(x-1,y+1);
 
-    m[x][y].setVisible();
-    m[x][y+1].setVisible();
-    m[x][y-1].setVisible();
+    discoverMap(x,y);
+    discoverMap(x,y+1);
+    discoverMap(x,y-1);
 
-    m[x+1][y].setVisible();
-    m[x+1][y+1].setVisible();
-    m[x+1][y-1].setVisible();
+    discoverMap(x+1,y);
+    discoverMap(x+1,y+1);
+    discoverMap(x+1,y-1);
 
 }
 
 void Scout::move(Coord c) {
 
 
-    cout << "old " << current_coord.getX() << current_coord.getY() << endl;
+  //  cout << "old " << current_coord.getX() << current_coord.getY() << endl;
     current_coord.setX(c.getX());
     current_coord.setY(c.getY());
 
-    discoverMap(current_coord.getX(), current_coord.getY());
-    cout << "new " << current_coord.getX() << current_coord.getY() << endl;
-    cout << nest->getMap()[current_coord.getX()][current_coord.getY()].getState() << endl;
-    cout <<  "scout moved !" << endl;
+    discoverMapLoop(current_coord.getX(), current_coord.getY());
+    //cout << "new " << current_coord.getX() << current_coord.getY() << endl;
+    //cout << nest->getMap()[current_coord.getX()][current_coord.getY()].getState() << endl;
+    //cout <<  "scout moved !" << endl;
 
 }
 

@@ -54,7 +54,7 @@ void Grid::loadSprite(sf::RenderWindow &window) {
                     sprites.setTexture(gazon);
             }
 
-            sprites.setTextureRect(sf::IntRect(0, 0, 100, 100));
+            sprites.setTextureRect(sf::IntRect(0, 0, 32, 32));
             sprites.setPosition(32 * x, 32 * y);
             window.draw(sprites);
         }
