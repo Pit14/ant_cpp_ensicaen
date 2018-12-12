@@ -7,6 +7,7 @@
 
 
 #include "Ant.h"
+#include "../Map/Grid.h"
 
 class Scout: public Ant {
 
@@ -25,6 +26,7 @@ public:
     Scout(Nest *n);
     void setC(Coord *c,int x, int y);
     void discoverMap(int x,int y);
+    void discoverMapLoop(int x,int y);
 
 };
 
