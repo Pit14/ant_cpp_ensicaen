@@ -106,28 +106,28 @@ void Grid::print_grid(){
     auto ping = 700;
     list<Ant*> ants;
 
-    sf::Text text;
-    sf::Font font;
-    font.loadFromFile("./arial.ttf");
-    text.setFont(font);
-    text.setStyle(sf::Text::Bold | sf::Text::Underlined);
-
-
-    text.setPosition((HEIGHT*32)/2,(WIDTH*32)/2);
-
-
-    text.setFillColor(sf::Color::White);
-    text.setCharacterSize(24);
-    text.setString("coucou");
-
-    window.draw(text);
+//    sf::Text text;
+//    sf::Font font;
+//    font.loadFromFile("./arial.ttf");
+//    text.setFont(font);
+//    text.setStyle(sf::Text::Bold | sf::Text::Underlined);
+//
+//
+//    text.setPosition((HEIGHT*32)/2,(WIDTH*32)/2);
+//
+//
+//    text.setFillColor(sf::Color::White);
+//    text.setCharacterSize(24);
+//    text.setString("coucou");
+//
+//    window.draw(text);
     // Retrieve the window's default view
     sf::View view = window.getDefaultView();
     view.setCenter((HEIGHT*32)/2,(WIDTH*32)/2);
     zoom = 2.f;
     view.zoom(zoom);
     window.setView(view);
-    window.draw(text);
+    //window.draw(text);
     window.display();
 
 
@@ -135,7 +135,7 @@ void Grid::print_grid(){
 
 
         window.clear();
-        window.draw(text);
+       // window.draw(text);
 
         elapsed1 = clock.getElapsedTime();
 

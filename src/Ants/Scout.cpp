@@ -136,7 +136,7 @@ void Scout::move(int x, int y) {
 
 /***
  * function that will be called each day by each ant, they will just do their action for the day :
- * aging, eating, moving, diying....
+ * aging, eating, moving, dying....
  */
 void Scout::update(){
     setAge(getAge() + 1);
@@ -149,7 +149,7 @@ void Scout::update(){
         if(!is_minor) { // is not minor
             find_move();
         }else{ // is minor
-            if(getAge()>=2){
+            if(getAge()>=SCOUT_MINOR_DAY){
                 setIs_minor(false);
             }
         }
@@ -164,12 +164,12 @@ void Scout::eat(){
     if(nest->getFood()<DAILY_FOOD_CONSUMPTION_ANT){ // not enough food, ant die.
         die();
     }else{
-        nest->setFood(nest->getFood()-0.001);
+        nest->setFood(nest->getFood()-DAILY_FOOD_CONSUMPTION_ANT);
     }
 }
 
 /***
- * The ant isn't minor anymor, so we turn her is_minor boolean attribute to false.
+ * The ant isn't minor anymore, so we turn her is_minor boolean attribute to false.
  * @param is_minor
  */
 void Scout::setIs_minor(bool is_minor) {

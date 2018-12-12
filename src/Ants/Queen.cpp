@@ -11,44 +11,54 @@ Queen::Queen(Nest *n):
     nest = n;
 }
 
+/***
+ * function that will be called each day by each ant, they will just do their action for the day :
+ * aging, eating, give birth, dying....
+ */
 void Queen::update(){
-//    std::cout << "test" << std::endl;
-    eat();
-//    std::cout << age << std::endl;
+    setAge(getAge() + 1);
 
-    if(age > 0){
-        give_birth();
-    }else{
-        nest->add_ant(new Scout(nest));
-        give_birth();
-        //nest->add_ant(new Scout(nest));
-      //  nest->add_ant(new Scout(nest));
+    if (getAge() > QUEEN_LIFE_EXPECTANCY) {
+        die();
+    }else {
+        eat();
+        if (age > 1) {
+            give_birth();
+        } else { // the first day she gave birth to a scout
+            nest->add_ant(new Scout(nest));
+            give_birth();
+        }
     }
-    age++;
 }
 
+/***
+ * the ant will eat his daily food dose needed to survive.
+ * If there's not enough food in the nest, the ant will simply die.
+ */
 void Queen::eat(){
-    //cout << "mange" << nest->getFood() << endl;
-
-    if(nest->getFood() > 0.01){
-         nest->setFood(nest->getFood()- 0.01);
+    if(nest->getFood() > DAILY_FOOD_CONSUMPTION_QUEEN){
+         nest->setFood(nest->getFood()- DAILY_FOOD_CONSUMPTION_QUEEN);
     }else{
         this->die();
     }
 }
 
+/***
+ * we call the kill_ant function from the nest to delete the ant.
+ */
 void Queen::die(){
-    //end of simulation
-   // cout << "End simulation" << endl;
-
+    nest->kill_ant(this);
 }
 
+/***
+ * will randomly give irth to an ant by adding it to the list of ants of the nest
+ */
 void Queen::give_birth(){
 
     int random = rand() % 100 + 1;
 
     if(random <= 80) {
-        //nest->add_ant(new Worker(nest));
+        nest->add_ant(new Worker(nest));
     } else if(random <= 95) {
         //nest->add_ant(new Soldier(nest));
     }else{

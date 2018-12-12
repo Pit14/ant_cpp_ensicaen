@@ -12,6 +12,10 @@ Nest::Nest(Cell ** m) {
     ants.push_back(queen);
 }
 
+/***
+ * we call this function each day,
+ * it will call the update function of each ant in the list of ant
+ */
 void Nest::update_nest() {
     for(std::list<Ant*>::iterator it = ants.begin(); it!=ants.end(); ++it)
     {
@@ -47,6 +51,10 @@ void Nest::setMap(Cell **map) {
     Nest::map = map;
 }
 
+/***
+ * Will kill an ant by removing it from the list of ant, and call the delete function of the ant.
+ * @param ant
+ */
 void Nest::kill_ant(Ant *ant) {
     ants.remove(ant);
     delete ant;

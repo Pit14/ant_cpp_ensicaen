@@ -8,6 +8,8 @@ using namespace std;
 
 
 #include "Ant.h"
+#include "../Map/Grid.h"
+
 
 class Worker: public Ant {
 
@@ -17,10 +19,14 @@ protected:
     int pheromone = 500;
 
 public:
+    void setIs_minor(bool is_minor);
+    void find_move();
+    bool try_to_move(int x, int y,Cell ** m);
+
     void pick_up_food();
     virtual void die();
     void drop_food();
-    void move(Coord *c);
+    void move(int x, int y);
     virtual void eat();
     virtual void update();
     Worker(Nest *n);
