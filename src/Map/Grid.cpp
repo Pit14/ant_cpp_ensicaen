@@ -25,7 +25,7 @@ Grid::Grid()
 
 
     sf::Sprite sprites;
-    fourmis.loadFromFile("../src/pic/ant.jpg");
+    fourmis.loadFromFile("../src/pic/ant.png");
     bouffe.loadFromFile("../src/pic/food.jpg");
     gazon.loadFromFile("../src/pic/pelouse.jpg");
     colony.loadFromFile("../src/pic/colony.jpg");
@@ -78,31 +78,49 @@ void Grid::print_grid(){
 
 
 
-    sf::RenderWindow window(sf::VideoMode(400,400),"my screen");
-
+    sf::RenderWindow window(sf::VideoMode(600,600),"my screen",sf::Style::Close);
+    sf::Clock clock;
+    sf::Time elapsed1;
     window.setFramerateLimit(30);
     //window.setFramerateLimit(100);
     sf::Vector2f oldPos;
     bool moving = false;
 
     float zoom = 1;
-
+    auto ping = 700;
     list<Ant*> ants;
+
+   /* sf::Text text = ("BONJOUR",);
+    text.Move(50, 50);*/
 
     // Retrieve the window's default view
     sf::View view = window.getDefaultView();
-   // view.setCenter((WIDTH*HEIGHT)/2,(WIDTH*HEIGHT)/2);
+    view.setCenter((HEIGHT*32)/2,(WIDTH*32)/2);
+    zoom = 2.f;
+    view.zoom(zoom);
+    window.setView(view);
+    window.display();
 
 
     while(window.isOpen()) {
 
+
         window.clear();
-        nest->update_nest();
-        ants = nest->getAnts();
+
+        elapsed1 = clock.getElapsedTime();
+
         loadSprite(window);
         loadAnts(window, ants);
-        //std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    // fonction update nest fait planter le zoom
+        if (elapsed1.asMilliseconds()> ping) {
+
+            nest->update_nest();
+            ants = nest->getAnts();
+
+
+            clock.restart();
+        }
+
+
 
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -123,6 +141,21 @@ void Grid::print_grid(){
                         moving = false;
                     }
                     break;
+
+
+                case sf::Event::KeyPressed:
+
+                    if (event.key.code == sf::Keyboard::Left)
+                        if( ping > 101 ) {
+                            ping = ping - EXECUTION_DELAY;
+                            break;
+                        }
+
+                    if(event.key.code == sf::Keyboard::Right)
+                        if (ping < 1500)
+                            ping = ping + EXECUTION_DELAY;
+                    break;
+
                 case sf::Event::MouseMoved:
                 {
                     // Ignore mouse movement unless a button is pressed (see above)
@@ -151,7 +184,7 @@ void Grid::print_grid(){
                     // Determine the scroll direction and adjust the zoom level
                     // Again, you can swap these to invert the direction
                     if (event.mouseWheelScroll.delta <= -1)
-                        zoom = std::min(2.f, zoom + .1f);
+                        zoom = std::min(10.f, zoom + .1f);
                     else if (event.mouseWheelScroll.delta >= 1)
                         zoom = std::max(.5f, zoom - .1f);
 

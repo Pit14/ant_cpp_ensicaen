@@ -6,11 +6,12 @@
 #define C_DEFINE_H
 
 
-#define HEIGHT 31//211
-#define WIDTH  31//201
+#define HEIGHT 211//211
+#define WIDTH  201//201
 #define FOOD_1_case 10
 #define BIG_FOOD 2000
 #define LIFE_EXPECTANCY 365
+#define EXECUTION_DELAY 100
 #define QUEEN_LIFE_EXPECTANCY 365*10
 
 typedef enum {

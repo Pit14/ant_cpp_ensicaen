@@ -15,14 +15,14 @@ Scout::Scout(Nest *n):
 
     Cell ** m = nest->getMap();
 
-    int cpti;
+   /* int cpti;
     int cptj;
     for(cpti=0;cpti<HEIGHT-1;cpti++){
         for(cptj=0;cptj<WIDTH-1;cptj++){
             cout << " " << m[cptj][cpti].getState();
         }
         cout << endl;
-    }
+    }*/
 
 }
 
