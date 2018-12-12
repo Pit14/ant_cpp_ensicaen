@@ -11,6 +11,7 @@
 #include "Grid.h"
 #include "Cell.h"
 #include <chrono>
+#include <typeinfo>
 #include <thread>
 #include "../Ants/Queen.h"
 #include "../Ants/Nest.h"
@@ -31,6 +32,7 @@ Grid::Grid()
     colony.loadFromFile("../src/pic/colony.jpg");
     rock.loadFromFile("../src/pic/rock.png");
     fog.loadFromFile("../src/pic/black.jpg");
+    worker.loadFromFile("../src/pic/ouvriere.png");
 }
 
 
@@ -66,10 +68,20 @@ void Grid::loadAnts(sf::RenderWindow &window, list<Ant*> ants) {
     for(std::list<Ant*>::iterator it = ants.begin(); it!=ants.end(); ++it)
     {
         *temp = (*it)->getCoord();
-        sprites.setTexture(fourmis);
-        sprites.setTextureRect(sf::IntRect(0, 0, 32, 32));
-        sprites.setPosition(32 * temp->getX() , 32 * temp->getY() );
-        window.draw(sprites);
+        if((dynamic_cast<Scout*>(*it) != nullptr))
+        {
+            sprites.setTexture(fourmis);
+        }
+
+        if((dynamic_cast<Worker*>(*it) != nullptr))
+        {
+            sprites.setTexture(worker);
+        }
+       // if(typeid(*it).name() == "Worker")
+            sprites.setTextureRect(sf::IntRect(0, 0, 32, 32));
+            sprites.setPosition(32 * temp->getX(), 32 * temp->getY());
+            window.draw(sprites);
+
 
 
     }
@@ -78,7 +90,11 @@ void Grid::print_grid(){
 
 
 
-    sf::RenderWindow window(sf::VideoMode(600,600),"my screen",sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(800,600),"my screen",sf::Style::Close);
+
+    // décommenter pour full screen
+    //sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
+    //sf::RenderWindow window(desktop, "SFML works!");
     sf::Clock clock;
     sf::Time elapsed1;
     window.setFramerateLimit(30);
@@ -90,15 +106,28 @@ void Grid::print_grid(){
     auto ping = 700;
     list<Ant*> ants;
 
-   /* sf::Text text = ("BONJOUR",);
-    text.Move(50, 50);*/
+    sf::Text text;
+    sf::Font font;
+    font.loadFromFile("./arial.ttf");
+    text.setFont(font);
+    text.setStyle(sf::Text::Bold | sf::Text::Underlined);
 
+
+    text.setPosition((HEIGHT*32)/2,(WIDTH*32)/2);
+
+
+    text.setFillColor(sf::Color::White);
+    text.setCharacterSize(24);
+    text.setString("coucou");
+
+    window.draw(text);
     // Retrieve the window's default view
     sf::View view = window.getDefaultView();
     view.setCenter((HEIGHT*32)/2,(WIDTH*32)/2);
     zoom = 2.f;
     view.zoom(zoom);
     window.setView(view);
+    window.draw(text);
     window.display();
 
 
@@ -106,6 +135,7 @@ void Grid::print_grid(){
 
 
         window.clear();
+        window.draw(text);
 
         elapsed1 = clock.getElapsedTime();
 
@@ -145,13 +175,13 @@ void Grid::print_grid(){
 
                 case sf::Event::KeyPressed:
 
-                    if (event.key.code == sf::Keyboard::Left)
+                    if (event.key.code == sf::Keyboard::Right)
                         if( ping > 101 ) {
                             ping = ping - EXECUTION_DELAY;
                             break;
                         }
 
-                    if(event.key.code == sf::Keyboard::Right)
+                    if(event.key.code == sf::Keyboard::Left)
                         if (ping < 1500)
                             ping = ping + EXECUTION_DELAY;
                     break;

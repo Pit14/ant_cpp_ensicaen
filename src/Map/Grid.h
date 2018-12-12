@@ -42,6 +42,7 @@ public:
     sf::Texture colony;
     sf::Texture rock;
     sf::Texture fog;
+    sf::Texture worker;
 
 private:
     Nest *nest;
