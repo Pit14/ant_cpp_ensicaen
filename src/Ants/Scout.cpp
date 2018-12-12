@@ -27,7 +27,7 @@ Scout::Scout(Nest *n):
 }
 
 void Scout::die() {
-    //nest->getAnts().remove(this);
+    nest->kill_ant(this);
     //delete this;
 }
 

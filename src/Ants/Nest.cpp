@@ -46,3 +46,8 @@ Cell **Nest::getMap() const {
 void Nest::setMap(Cell **map) {
     Nest::map = map;
 }
+
+void Nest::kill_ant(Ant *ant) {
+    ants.remove(ant);
+    delete ant;
+}
