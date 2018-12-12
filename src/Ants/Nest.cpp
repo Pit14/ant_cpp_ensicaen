@@ -6,7 +6,7 @@
 #include "Queen.h"
 
 Nest::Nest(Cell ** m) {
-    food = 2;
+    food = INITIAL_FOOD_ON_NEST;
     map = m;
     Queen *queen = new Queen(this);
     ants.push_back(queen);
@@ -45,4 +45,9 @@ Cell **Nest::getMap() const {
 
 void Nest::setMap(Cell **map) {
     Nest::map = map;
+}
+
+void Nest::kill_ant(Ant *ant) {
+    ants.remove(ant);
+    delete ant;
 }

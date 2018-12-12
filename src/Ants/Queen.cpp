@@ -17,9 +17,10 @@ void Queen::update(){
 //    std::cout << age << std::endl;
 
     if(age > 0){
-       // give_birth();
+        give_birth();
     }else{
         nest->add_ant(new Scout(nest));
+        give_birth();
         //nest->add_ant(new Scout(nest));
       //  nest->add_ant(new Scout(nest));
     }
@@ -47,9 +48,9 @@ void Queen::give_birth(){
     int random = rand() % 100 + 1;
 
     if(random <= 80) {
-        nest->add_ant(new Worker(nest));
+        //nest->add_ant(new Worker(nest));
     } else if(random <= 95) {
-        nest->add_ant(new Soldier(nest));
+        //nest->add_ant(new Soldier(nest));
     }else{
         nest->add_ant(new Scout(nest));
     }

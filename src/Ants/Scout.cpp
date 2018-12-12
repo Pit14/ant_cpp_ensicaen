@@ -9,7 +9,6 @@ Scout::Scout(Nest *n):
         Ant(*n)
 {
     nest = n;
-    cout << "instanciation scout" << endl;
     current_coord.setY(round(HEIGHT/2));
     current_coord.setX(round(WIDTH/2));
 
@@ -26,119 +25,89 @@ Scout::Scout(Nest *n):
 
 }
 
+/***
+ * we call the kill_ant function from the nest to delete the ant.
+ */
 void Scout::die() {
-    //nest->getAnts().remove(this);
-    //delete this;
+    nest->kill_ant(this);
 }
 
+/***
+ * the ant will find somewhere it can move. Randomly for the moment.
+ */
 void Scout::find_move() {
     Cell ** m = nest->getMap();
-    int rand_dir = rand() % 8 +1;
-    //cout <<  "Random : " << rand_dir << endl;
 
-    Coord *c;// = new Coord(1,1);
+    bool has_moved = false;
 
-    switch(rand_dir) { // left
+    while(!has_moved) {
 
-        case 1 :
-            c->setY(current_coord.getY() - 1);
-            c->setX(current_coord.getX() - 1);
+        int rand_dir = rand() % 8 +1;
 
-            //cout <<  "m15 : " << m[15,15]->getState() << endl;
+        switch (rand_dir) {
 
+            case 1 :// left
+                has_moved = try_to_move(current_coord.getX() - 1, current_coord.getY() - 1, m);
+                break;
+            case 2 :
+                has_moved = try_to_move(current_coord.getX(), current_coord.getY() - 1, m);
+                break;
+            case 3 :
+                has_moved = try_to_move(current_coord.getX() + 1, current_coord.getY() - 1, m);
+                break;
+            case 4 :
+                has_moved = try_to_move(current_coord.getX() - 1, current_coord.getY(), m);
+                break;
+            case 5 :
+                has_moved = try_to_move(current_coord.getX() + 1, current_coord.getY(), m);
+                break;
+            case 6 :
+                has_moved = try_to_move(current_coord.getX() - 1, current_coord.getY() + 1, m);
+                break;
+            case 7 :
+                has_moved = try_to_move(current_coord.getX(), current_coord.getY() + 1, m);
+                break;
+            case 8 :
+                has_moved = try_to_move(current_coord.getX() + 1, current_coord.getY() + 1, m);
+                break;
+        }
 
-
-            if(!Grid::isOutOfLimit(c->getX(),c->getY())) {
-                if (m[c->getX()][c->getY()].getState() != BLOCKED) {
-                    //cout <<  "before move : " << endl;
-                    //            cout <<  "get y current_coord : " << ( current_coord.getY()) << endl;
-                    //            cout <<  "get x current coord : " << current_coord.getX() << endl;
-                    //
-                    //            cout <<  "get y c : " << c->getY() << endl;
-                    //            cout <<  "get x c : " << c->getX() << endl;
-
-                    move(*c);
-                }
-            }
-            break;
-        case 2 :
-            c->setY(current_coord.getY() - 1);
-            c->setX(current_coord.getX());
-            if(!Grid::isOutOfLimit(c->getX(),c->getY())) {
-                if (m[c->getX()][c->getY()].getState() != BLOCKED) {
-                    move(*c);
-                }
-            }
-            break;
-        case 3 :
-            c->setY(current_coord.getY() - 1);
-            c->setX(current_coord.getX()+1);
-            if(!Grid::isOutOfLimit(c->getX(),c->getY())) {
-                if (m[c->getX()][c->getY()].getState() != BLOCKED) {
-                    move(*c);
-                }
-            }
-            break;
-        case 4 :
-            c->setY(current_coord.getY());
-            c->setX(current_coord.getX()-1);
-            if(!Grid::isOutOfLimit(c->getX(),c->getY())) {
-                if (m[c->getX()][c->getY()].getState() != BLOCKED) {
-                    move(*c);
-                }
-            }
-            break;
-        case 5 :
-            c->setY(current_coord.getY());
-            c->setX(current_coord.getX()+1);
-            if(!Grid::isOutOfLimit(c->getX(),c->getY())) {
-                if (m[c->getX()][c->getY()].getState() != BLOCKED) {
-                    move(*c);
-                }
-            }
-            break;
-        case 6 :
-            c->setY(current_coord.getY()+1);
-            c->setX(current_coord.getX()-1);
-            if(!Grid::isOutOfLimit(c->getX(),c->getY())) {
-                if (m[c->getX()][c->getY()].getState() != BLOCKED) {
-                    move(*c);
-                }
-            }
-            break;
-        case 7 :
-            c->setY(current_coord.getY() +1);
-            c->setX(current_coord.getX());
-            if(!Grid::isOutOfLimit(c->getX(),c->getY())) {
-                if (m[c->getX()][c->getY()].getState() != BLOCKED) {
-                    move(*c);
-                }
-            }
-            break;
-        case 8 :
-            c->setY(current_coord.getY() +1);
-            c->setX(current_coord.getX()+1);
-            if(!Grid::isOutOfLimit(c->getX(),c->getY())) {
-                if (m[c->getX()][c->getY()].getState() != BLOCKED) {
-                    move(*c);
-                }
-            }
-            break;
     }
-
 }
 
-void Scout::setC(Coord *c,int x,int y){
-    c->setY(y);
-    c->setX(x);
+/***
+ * will check if the coord is off limit, and if it's not, the ant will move on the cell corresponding
+ * @param x : coord to wich you want to move
+ * @param y : coord to wich you want to move
+ * @param m : pointer pointing at the map
+ */
+bool Scout::try_to_move(int x,int y, Cell ** m){
+
+    if(!Grid::isOutOfLimit(x,y)) {
+        if (m[x][y].getState() != BLOCKED) {
+            move(x,y);
+            return true;
+        }
+    }
+    return false;
 }
 
+/***
+ * We unfg the cell if it hasn't already be unfogged
+ * @param x : coord of the cell to unfog
+ * @param y : coord of the cell to unfog
+ */
 void Scout::discoverMap(int x, int y) {
-
     Cell ** m = nest->getMap();
     if ( !Grid::isOutOfLimit(x,y) && m[x][y].getHide())
         m[x][y].setVisible();
 }
+
+/***
+ * We make visible all the nearby cell to the ant.
+ * @param x : x coord of the ant
+ * @param y : y coord of the ant
+ */
 void Scout::discoverMapLoop(int x,int y) {
 
     discoverMap(x-1,y);
@@ -152,48 +121,57 @@ void Scout::discoverMapLoop(int x,int y) {
     discoverMap(x+1,y);
     discoverMap(x+1,y+1);
     discoverMap(x+1,y-1);
-
 }
 
-void Scout::move(Coord c) {
-
-
-  //  cout << "old " << current_coord.getX() << current_coord.getY() << endl;
-    current_coord.setX(c.getX());
-    current_coord.setY(c.getY());
-
+/***
+ * The ant will move on the cell corresponding to the coord passed in argument.
+ * The scout ant will also discover what's under the fog.
+ * @param c : the coord we want the ant to move on.
+ */
+void Scout::move(int x, int y) {
+    current_coord.setX(x);
+    current_coord.setY(y);
     discoverMapLoop(current_coord.getX(), current_coord.getY());
-    //cout << "new " << current_coord.getX() << current_coord.getY() << endl;
-    //cout << nest->getMap()[current_coord.getX()][current_coord.getY()].getState() << endl;
-    //cout <<  "scout moved !" << endl;
-
 }
 
+/***
+ * function that will be called each day by each ant, they will just do their action for the day :
+ * aging, eating, moving, diying....
+ */
 void Scout::update(){
-
     setAge(getAge() + 1);
 
-    if(!is_minor) {
-        if (getAge() > LIFE_EXPECTANCY) {
-            die();
-        }
-        // eat();
-        find_move();
+    if (getAge() > LIFE_EXPECTANCY) {
+        die();
     }else{
-        if(getAge()>=2){
-            setIs_minor(false);
+        eat(); // we eat wether we're minor or major
+
+        if(!is_minor) { // is not minor
+            find_move();
+        }else{ // is minor
+            if(getAge()>=2){
+                setIs_minor(false);
+            }
         }
-        //eat();
     }
 }
+
+/***
+ * the ant will eat his daily food dose needed to survive.
+ * If there's not enough food in the nest, the ant will simply die.
+ */
 void Scout::eat(){
-    cout << "scout mange" << nest->getFood() << endl;
+    if(nest->getFood()<DAILY_FOOD_CONSUMPTION_ANT){ // not enough food, ant die.
+        die();
+    }else{
+        nest->setFood(nest->getFood()-0.001);
+    }
 }
 
-bool Scout::isIs_minor() const {
-    return is_minor;
-}
-
+/***
+ * The ant isn't minor anymor, so we turn her is_minor boolean attribute to false.
+ * @param is_minor
+ */
 void Scout::setIs_minor(bool is_minor) {
     Scout::is_minor = is_minor;
 }

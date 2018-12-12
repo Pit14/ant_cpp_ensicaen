@@ -36,6 +36,8 @@ public:
     Cell **getMap() const;
 
     void setMap(Cell **map);
+
+    void kill_ant(Ant *ant);
 };
 
 
