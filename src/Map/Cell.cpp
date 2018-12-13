@@ -11,6 +11,9 @@ Cell::Cell()= default;
 
 void Cell::TakeFood() {
     food--;
+    if(food == 0){
+        setState(FREE);
+    }
 }
 
 void Cell::EatFood( int value) {
@@ -31,6 +34,11 @@ bool Cell::getHide(){
 void Cell::setFood(float foods) {
     food = foods;
 }
+
+float Cell::getFood() {
+    return food;
+}
+
 state_cell Cell::getState(){
     return state;
 }

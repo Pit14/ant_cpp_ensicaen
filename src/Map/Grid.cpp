@@ -21,7 +21,7 @@ Grid::Grid()
 {
 
     rock_value = round(HEIGHT*WIDTH*0.3);
-    food_number = round(HEIGHT*WIDTH*0.0002);
+    food_number = round(HEIGHT*WIDTH*FOOD_PERCENTAGE );
 
 
 
