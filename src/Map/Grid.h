@@ -30,7 +30,8 @@ public:
     bool recursive(int x, int y,int size_rock, previous_pos old , int food_value);
     void print_grid ();
     void loadSprite(sf::RenderWindow &window);
-    void loadAnts(sf::RenderWindow &window, list<Ant*> ants);
+    int loadAnts(sf::RenderWindow &window, list<Ant*> ants);
+    void show_stat(sf::RenderWindow &window, int cmptr_ant, sf::Text text);
     Cell **array;
     double rock_value;
     double food_number;
@@ -46,6 +47,8 @@ public:
 
 private:
     Nest *nest;
+    int day;
+    int ping;
 
 };
 

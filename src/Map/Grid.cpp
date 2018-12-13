@@ -26,13 +26,14 @@ Grid::Grid()
 
 
     sf::Sprite sprites;
-    fourmis.loadFromFile("../src/pic/ant.png");
-    bouffe.loadFromFile("../src/pic/food.jpg");
-    gazon.loadFromFile("../src/pic/pelouse.jpg");
-    colony.loadFromFile("../src/pic/colony.jpg");
-    rock.loadFromFile("../src/pic/rock.png");
-    fog.loadFromFile("../src/pic/black.jpg");
-    worker.loadFromFile("../src/pic/ouvriere.png");
+    fourmis.loadFromFile("../Ressources/pic/ant.png");
+    bouffe.loadFromFile("../Ressources/pic/food.jpg");
+    gazon.loadFromFile("../Ressources/pic/pelouse.jpg");
+    colony.loadFromFile("../Ressources/pic/colony.jpg");
+    rock.loadFromFile("../Ressources/pic/rock.png");
+    fog.loadFromFile("../Ressources/pic/black.jpg");
+    worker.loadFromFile("../Ressources/pic/ouvriere.png");
+    ping = 700;
 }
 
 
@@ -62,11 +63,14 @@ void Grid::loadSprite(sf::RenderWindow &window) {
         }
     }
 }
-void Grid::loadAnts(sf::RenderWindow &window, list<Ant*> ants) {
+int Grid::loadAnts(sf::RenderWindow &window, list<Ant*> ants) {
 
-   Coord *temp = new Coord(0,0);
+    int cmptr = 0;
+    Coord *temp = new Coord(0,0);
     for(std::list<Ant*>::iterator it = ants.begin(); it!=ants.end(); ++it)
     {
+
+        cmptr ++ ;
         *temp = (*it)->getCoord();
         if((dynamic_cast<Scout*>(*it) != nullptr))
         {
@@ -85,13 +89,20 @@ void Grid::loadAnts(sf::RenderWindow &window, list<Ant*> ants) {
 
 
     }
+
+    return cmptr;
+}
+
+void Grid::show_stat(sf::RenderWindow &window, int cmptr_ant, sf::Text text) {
+    text.setString("Day : "+to_string(day)+" Ant : "+to_string(cmptr_ant)+" Food : "+to_string(nest->getFood())+" Ping : "+to_string(ping)+"ms");
+    window.draw(text);
 }
 void Grid::print_grid(){
 
 
 
-    sf::RenderWindow window(sf::VideoMode(800,600),"my screen",sf::Style::Close);
-
+    sf::RenderWindow window(sf::VideoMode(WIND_WIDTH,WIND_HEIGHT),"my screen",sf::Style::Close);
+  //  sf::RenderWindow window2(sf::VideoMode(800,600),"my screen",sf::Style::Close);
     // décommenter pour full screen
     //sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
     //sf::RenderWindow window(desktop, "SFML works!");
@@ -101,26 +112,27 @@ void Grid::print_grid(){
     //window.setFramerateLimit(100);
     sf::Vector2f oldPos;
     bool moving = false;
+    int cmptr_ant = 0;
 
     float zoom = 1;
-    auto ping = 700;
+
     list<Ant*> ants;
 
-//    sf::Text text;
-//    sf::Font font;
-//    font.loadFromFile("./arial.ttf");
-//    text.setFont(font);
-//    text.setStyle(sf::Text::Bold | sf::Text::Underlined);
-//
-//
-//    text.setPosition((HEIGHT*32)/2,(WIDTH*32)/2);
-//
-//
-//    text.setFillColor(sf::Color::White);
-//    text.setCharacterSize(24);
-//    text.setString("coucou");
-//
-//    window.draw(text);
+
+    sf::Font font;
+    font.loadFromFile("../Ressources/arial.ttf");
+    sf::Text text;
+
+// select the font
+    text.setFont(font); // font is a sf::Font
+
+
+    text.setCharacterSize(24);
+    text.setFillColor(sf::Color::Red);
+    text.setStyle(sf::Text::Bold | sf::Text::Underlined);
+    text.setPosition((WIDTH*32/2)-WIND_WIDTH+200,(HEIGHT*32/2)-WIND_HEIGHT-120);
+    //window.draw(text);
+
     // Retrieve the window's default view
     sf::View view = window.getDefaultView();
     view.setCenter((HEIGHT*32)/2,(WIDTH*32)/2);
@@ -135,14 +147,16 @@ void Grid::print_grid(){
 
 
         window.clear();
-       // window.draw(text);
+
 
         elapsed1 = clock.getElapsedTime();
 
         loadSprite(window);
-        loadAnts(window, ants);
+        cmptr_ant = loadAnts(window, ants);
+        show_stat(window,cmptr_ant,text);
+        window.draw(text);
         if (elapsed1.asMilliseconds()> ping) {
-
+            day++;
             nest->update_nest();
             ants = nest->getAnts();
 
@@ -176,7 +190,7 @@ void Grid::print_grid(){
                 case sf::Event::KeyPressed:
 
                     if (event.key.code == sf::Keyboard::Right)
-                        if( ping > 101 ) {
+                        if( ping > 11 ) {
                             ping = ping - EXECUTION_DELAY;
                             break;
                         }
@@ -196,9 +210,13 @@ void Grid::print_grid(){
                     // Determine how the cursor has moved
                     // Swap these to invert the movement direction
                     const sf::Vector2f deltaPos = oldPos - newPos;
-
+                    sf::Vector2f deltaPos2 = oldPos - newPos;
                     // Move our view accordingly and update the window
+
+                    deltaPos2.x = deltaPos2.x-WIND_WIDTH+30;
+                    deltaPos2.y = deltaPos2.y-WIND_HEIGHT +20;
                     view.setCenter(view.getCenter() + deltaPos);
+                    text.setPosition(view.getCenter()+deltaPos2);
                     window.setView(view);
 
                     // Save the new position as the old one
@@ -221,10 +239,12 @@ void Grid::print_grid(){
                     // Update our view
                     view.setSize(window.getDefaultView().getSize()); // Reset the size
                     view.zoom(zoom); // Apply the zoom level (this transforms the view)
+
                     window.setView(view);
                     break;
             }
         }
+
 
 
         window.display();
