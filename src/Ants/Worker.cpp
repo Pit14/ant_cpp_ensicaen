@@ -37,10 +37,10 @@ void Worker::drop_food() {
 void Worker::move(int x, int y) {
     current_coord.setX(x);
     current_coord.setY(y);
-    Coord *c = new Coord(x,y);
+    Coord c = Coord(x,y);
 //    c->setX(x);
 //    c->setY(y);
-    path_to_nest.push(*c);
+    path_to_nest.push(c);
 
 }
 
@@ -91,6 +91,9 @@ bool Worker::try_to_move(int x,int y, Cell ** m){
                     path_to_nest.pop();
                     is_carriyng_food == true;
                     m[x][y].TakeFood();
+
+                    //to change :
+                    nest->setFood(nest->getFood()+1);
                 }
                 return true;
         }
