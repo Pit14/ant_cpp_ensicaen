@@ -144,7 +144,10 @@ void Scout::update(){
     if (getAge() > LIFE_EXPECTANCY) {
         die();
     }else{
+        cout << "debut scout" << endl;
         eat(); // we eat wether we're minor or major
+        cout << "fin scout" << endl;
+
 
         if(!is_minor) { // is not minor
             find_move();
@@ -160,11 +163,13 @@ void Scout::update(){
  * the ant will eat his daily food dose needed to survive.
  * If there's not enough food in the nest, the ant will simply die.
  */
-void Scout::eat(){
+bool Scout::eat(){
     if(nest->getFood()<DAILY_FOOD_CONSUMPTION_ANT){ // not enough food, ant die.
         die();
+        return false;
     }else{
         nest->setFood(nest->getFood()-DAILY_FOOD_CONSUMPTION_ANT);
+        return true;
     }
 }
 

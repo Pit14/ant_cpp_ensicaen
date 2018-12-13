@@ -19,7 +19,7 @@ public:
     void kill(BadAnt b);
     virtual void die();
     void move(Coord c);
-    virtual void eat();
+    virtual bool eat();
     virtual void update();
     Soldier(Nest *n);
 };

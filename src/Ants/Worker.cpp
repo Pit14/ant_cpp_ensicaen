@@ -60,32 +60,40 @@ void Worker::update(){
     if (getAge() > LIFE_EXPECTANCY) {
         die();
     }else{
-        eat(); // we eat wether we're minor or major
+        cout << "debut eat" << endl;
 
-        if(!is_minor) { // is not minor
-            if(!is_carriyng_food){ // if we are not carrying food we move.
-                find_move();
-            }else{ // if we are carrying food, we're going back to the nest by following the path to nest
-                if(!path_to_nest.empty()){
-                    cout << "not empty" << endl;
+         if(eat()){ // we eat wether we're minor or major
 
-                    find_move();
-                   // move(path_to_nest.top().getX(),path_to_nest.top().getY());
-                }else{ // we're on the nest
-                    find_move();
+             if(!is_minor) { // is not minor
+                 if(!is_carriyng_food){ // if we are not carrying food we move.
+                     find_move();
+                 }else{ // if we are carrying food, we're going back to the nest by following the path to nest
+                     if(!path_to_nest.empty()){
+                         cout << "not empty" << endl;
 
-                    cout << "food deposit" << endl;
+                         find_move();
+                         // move(path_to_nest.top().getX(),path_to_nest.top().getY());
+                     }else{ // we're on the nest
+                         find_move();
 
-                    is_carriyng_food = false;
-                    nest->setFood(nest->getFood()+1);
-                }
-            }
-        }else{ // is minor
-            if(getAge()>= WORKER_MINOR_DAY){
-                setIs_minor(false);
-            }
-        }
+                         cout << "food deposit" << endl;
+
+                         is_carriyng_food = false;
+                         nest->setFood(nest->getFood()+1);
+                     }
+                 }
+             }else{ // is minor
+                 if(getAge()>= WORKER_MINOR_DAY){
+                     setIs_minor(false);
+                 }
+             }
+
+         }
+
+
     }
+    cout << "fin update worker" << endl;
+
 }
 
 
@@ -170,11 +178,13 @@ void Worker::find_move() {
  * the ant will eat his daily food dose needed to survive.
  * If there's not enough food in the nest, the ant will simply die.
  */
-void Worker::eat(){
+bool Worker::eat(){
     if(nest->getFood()<DAILY_FOOD_CONSUMPTION_ANT){ // not enough food, ant die.
         die();
+        return false;
     }else{
         nest->setFood(nest->getFood()-DAILY_FOOD_CONSUMPTION_ANT);
+        return true;
     }
 }
 

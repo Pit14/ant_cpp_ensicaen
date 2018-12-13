@@ -25,8 +25,9 @@ void Soldier::move(Coord c) {
 void Soldier::update(){
 
 }
-void Soldier::eat(){
+bool Soldier::eat(){
     cout << "soldier mange" << nest->getFood() << endl;
+    return true;
 }
 
 void Soldier::kill(BadAnt b) {
