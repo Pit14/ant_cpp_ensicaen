@@ -21,7 +21,7 @@ Grid::Grid()
 {
 
     rock_value = round(HEIGHT*WIDTH*0.3);
-    food_number = round(HEIGHT*WIDTH*0.0002);
+    food_number = round(HEIGHT*WIDTH*FOOD_PERCENTAGE );
 
 
 
@@ -141,6 +141,7 @@ void Grid::print_grid(){
 
         loadSprite(window);
         loadAnts(window, ants);
+        ping=1;
         if (elapsed1.asMilliseconds()> ping) {
 
             nest->update_nest();

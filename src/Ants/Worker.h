@@ -22,7 +22,7 @@ public:
     void setIs_minor(bool is_minor);
     void find_move();
     bool try_to_move(int x, int y,Cell ** m);
-
+    void clear_path_to_nest();
     void pick_up_food();
     virtual void die();
     void drop_food();

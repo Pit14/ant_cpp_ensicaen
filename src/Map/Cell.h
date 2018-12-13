@@ -22,6 +22,7 @@ public:
     state_cell getState();
     void setState(state_cell states);
     void setFood(float foods);
+    float getFood();
     void setVisible();
     bool getHide();
 

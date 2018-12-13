@@ -13,6 +13,8 @@ Worker::Worker(Nest *n):
     is_carriyng_food = false;
     current_coord.setY(round(HEIGHT/2));
     current_coord.setX(round(WIDTH/2));
+    //Coord c = Coord(current_coord.getX(),current_coord.getY());
+    path_to_nest.push(current_coord);
 }
 
 /***
@@ -37,10 +39,11 @@ void Worker::drop_food() {
 void Worker::move(int x, int y) {
     current_coord.setX(x);
     current_coord.setY(y);
-    Coord c = Coord(x,y);
-//    c->setX(x);
-//    c->setY(y);
-    path_to_nest.push(c);
+
+//    if(!is_carriyng_food){
+//        Coord c = Coord(x,y);
+//        path_to_nest.push(c);
+//    }
 
 }
 
@@ -60,9 +63,19 @@ void Worker::update(){
         if(!is_minor) { // is not minor
             if(!is_carriyng_food){ // if we are not carrying food we move.
                 find_move();
-            }else{
+            }else{ // if we are carrying food, we're going back to the nest by following the path to nest
                 if(!path_to_nest.empty()){
-                    move(path_to_nest.top().getX(),path_to_nest.top().getY());
+                    cout << "not empty" << endl;
+
+                    find_move();
+                    //move(path_to_nest.top().getX(),path_to_nest.top().getY());
+                }else{ // we're on the nest
+                    find_move();
+
+                    //cout << "food deposit" << endl;
+
+                    is_carriyng_food = false;
+                    nest->setFood(nest->getFood()+1);
                 }
             }
         }else{ // is minor
@@ -87,13 +100,11 @@ bool Worker::try_to_move(int x,int y, Cell ** m){
         if (m[x][y].getState() != BLOCKED && !m[x][y].getHide() ) {
                 move(x, y);
                 if(m[x][y].getState() == FOOD){
-                    cout << "FOOD" << endl;
-                    path_to_nest.pop();
-                    is_carriyng_food == true;
+                    //cout << "Food : " <<  m[x][y].getFood() << endl;
+                   // path_to_nest.pop();
+                    is_carriyng_food = true;
                     m[x][y].TakeFood();
-
-                    //to change :
-                    nest->setFood(nest->getFood()+1);
+                    clear_path_to_nest();
                 }
                 return true;
         }
@@ -101,6 +112,9 @@ bool Worker::try_to_move(int x,int y, Cell ** m){
     return false;
 }
 
+void Worker::clear_path_to_nest(){
+
+}
 
 /***
  * the ant will find somewhere it can move. Randomly for the moment.

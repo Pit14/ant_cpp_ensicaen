@@ -17,7 +17,7 @@ Queen::Queen(Nest *n):
  */
 void Queen::update(){
     setAge(getAge() + 1);
-    cout << nest->getFood() << endl;
+    //cout << nest->getFood() << endl;
     if (getAge() > QUEEN_LIFE_EXPECTANCY) {
         die();
     }else {
