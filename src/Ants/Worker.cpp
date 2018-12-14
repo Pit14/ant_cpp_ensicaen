@@ -60,7 +60,6 @@ void Worker::update(){
     if (getAge() > LIFE_EXPECTANCY) {
         die();
     }else{
-        cout << "debut eat" << endl;
 
          if(eat()){ // we eat wether we're minor or major
 
@@ -92,7 +91,6 @@ void Worker::update(){
 
 
     }
-    cout << "fin update worker" << endl;
 
 }
 

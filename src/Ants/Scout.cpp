@@ -143,17 +143,14 @@ void Scout::update(){
 
     if (getAge() > LIFE_EXPECTANCY) {
         die();
-    }else{
-        cout << "debut scout" << endl;
-        eat(); // we eat wether we're minor or major
-        cout << "fin scout" << endl;
-
-
-        if(!is_minor) { // is not minor
-            find_move();
-        }else{ // is minor
-            if(getAge()>=SCOUT_MINOR_DAY){
-                setIs_minor(false);
+    }else {
+        if (eat()) {
+            if (!is_minor) { // is not minor
+                find_move();
+            } else { // is minor
+                if (getAge() >= SCOUT_MINOR_DAY) {
+                    setIs_minor(false);
+                }
             }
         }
     }
