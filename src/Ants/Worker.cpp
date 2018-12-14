@@ -44,9 +44,15 @@ void Worker::move(int x, int y) {
         Coord c = Coord(x,y);
         path_to_nest.push(c);
     }else if(is_carriyng_food && !path_to_nest.empty()){
-        path_to_nest.pop();
+      //  path_to_nest.pop();
     }
 
+}
+
+void Worker::move_back_to_nest(int x, int y){
+    current_coord.setX(x);
+    current_coord.setY(y);
+    path_to_nest.pop();
 }
 
 /***
@@ -70,10 +76,12 @@ void Worker::update(){
                      if(!path_to_nest.empty()){
                          cout << "not empty" << endl;
 
-                         find_move();
-                         // move(path_to_nest.top().getX(),path_to_nest.top().getY());
+                         //find_move();
+                         move_back_to_nest(path_to_nest.top().getX(),path_to_nest.top().getY());
+
+                        // try_to_move();
                      }else{ // we're on the nest
-                         find_move();
+                         //find_move();
 
                          cout << "food deposit" << endl;
 
@@ -106,20 +114,23 @@ bool Worker::try_to_move(int x,int y, Cell ** m){
 
     if(!Grid::isOutOfLimit(x,y)) {
         if (m[x][y].getState() != BLOCKED && !m[x][y].getHide() ) {
-                move(x, y);
-                if(m[x][y].getState() == FOOD){
+
+            if(m[x][y].getState() == FOOD){
 
                     //cout << "Food : " <<  m[x][y].getFood() << endl;
-
-                    if(!path_to_nest.empty()){
-                        path_to_nest.pop();
-                    }
+//
+//                    if(!path_to_nest.empty()){
+//                        path_to_nest.pop();
+//                    }
 
                     is_carriyng_food = true;
                     m[x][y].TakeFood();
                     clear_path_to_nest();
                 }
-                return true;
+            move(x, y);
+
+
+            return true;
         }
     }
     return false;

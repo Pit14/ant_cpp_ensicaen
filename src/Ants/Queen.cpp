@@ -21,10 +21,7 @@ void Queen::update(){
     if (getAge() > QUEEN_LIFE_EXPECTANCY) {
         die();
     }else {
-        cout << "debut queen" << endl;
         if(eat()){
-
-
             if (age > 1) {
                 give_birth();
             } else { // the first day she gave birth to a scout
@@ -32,9 +29,6 @@ void Queen::update(){
                 give_birth();
             }
         }
-        cout << "fin queen" << endl;
-
-
     }
 }
 
