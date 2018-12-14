@@ -14,13 +14,9 @@ Worker::Worker(Nest *n):
     current_coord.setY(round(HEIGHT/2));
     current_coord.setX(round(WIDTH/2));
     //Coord c = Coord(current_coord.getX(),current_coord.getY());
-    cout << "current  coord : " << endl;
-    cout << current_coord.getX() << endl;
 
     path_to_nest.push(current_coord);
-
-    cout << "pathtonest coord : " << endl;
-    path_to_nest.top().getX();
+    cout << current_coord.getX() << " "<< current_coord.getY() << endl;
 }
 
 /***
@@ -47,13 +43,20 @@ void Worker::move(int x, int y) {
     current_coord.setY(y);
 
     if(!is_carriyng_food){
-        path_to_nest.push(current_coord);
+        cout << x << " " << y << endl;
+        Coord c = Coord(x,y);
+        cout << c.getX() << " "<< c.getY() << endl;
+        path_to_nest.push(c);
+    }else if(is_carriyng_food && !path_to_nest.empty()){
+      //  path_to_nest.pop();
     }
+
 }
 
 void Worker::move_back_to_nest(int x, int y){
     current_coord.setX(x);
     current_coord.setY(y);
+    cout << current_coord.getX() << " " << current_coord.getY() << endl;
     path_to_nest.pop();
 }
 
@@ -62,9 +65,6 @@ void Worker::move_back_to_nest(int x, int y){
  * aging, eating, moving, carrying food, dying....
  */
 void Worker::update(){
-
-//    cout << "size : " <<  path_to_nest.size() << endl;
-//    cout << path_to_nest.top().getX() << endl;
     setAge(getAge() + 1);
     int x,y;
 
@@ -76,13 +76,10 @@ void Worker::update(){
 
              if(!is_minor) { // is not minor
                  if(!is_carriyng_food){ // if we are not carrying food we move.
-                    // cout << "debut find move" << endl;
                      find_move();
-                    // cout << "fin find move" << endl;
-
                  }else{ // if we are carrying food, we're going back to the nest by following the path to nest
                      if(!path_to_nest.empty()){
-                         //cout << "not empty" << endl;
+                         cout << "not empty" << endl;
 
                          //find_move();
                          move_back_to_nest(path_to_nest.top().getX(),path_to_nest.top().getY());
@@ -90,20 +87,11 @@ void Worker::update(){
                         // try_to_move();
                      }else{ // we're on the nest
                          //find_move();
-                         path_to_nest.push(current_coord);
 
                          cout << "food deposit" << endl;
 
                          is_carriyng_food = false;
-                         cout << "coord " << current_coord.getX() << endl;
-                         cout << "coord " << current_coord.getY() << endl;
-
-                         cout << "before " << nest->getFood() << endl;
-
                          nest->setFood(nest->getFood()+1);
-                         cout << "after " << nest->getFood() << endl;
-
-
                      }
                  }
              }else{ // is minor
@@ -162,14 +150,12 @@ void Worker::clear_path_to_nest(){
  */
 void Worker::find_move() {
     Cell ** m = nest->getMap();
-    //cout << "get map : "  << endl;
+
     bool has_moved = false;
 
     while(!has_moved) {
 
         int rand_dir = rand() % 8 +1;
-
-        //cout << "before switch : "  << endl;
 
         switch (rand_dir) {
 

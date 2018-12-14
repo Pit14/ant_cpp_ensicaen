@@ -13,6 +13,7 @@
 #include <chrono>
 #include <typeinfo>
 #include <thread>
+#include <fstream>
 #include "../Ants/Queen.h"
 #include "../Ants/Nest.h"
 
@@ -97,6 +98,11 @@ void Grid::show_stat(sf::RenderWindow &window, int cmptr_ant, sf::Text text) {
     text.setString("Day : "+to_string(day)+" Ant : "+to_string(cmptr_ant)+" Food : "+to_string(nest->getFood())+" Ping : "+to_string(ping)+"ms");
     window.draw(text);
 }
+
+void Grid::write_gnuplot( int cmptr_ant, std::ofstream &ofs) {
+    ofs << to_string(day) << " " << to_string(cmptr_ant) << " " << to_string(nest->getFood()) << "\n";
+
+}
 void Grid::print_grid(){
 
 
@@ -113,6 +119,8 @@ void Grid::print_grid(){
     sf::Vector2f oldPos;
     bool moving = false;
     int cmptr_ant = 0;
+    std::ofstream ofs;
+    ofs.open("../etc/evolution.txt", std::ofstream::trunc);
 
     float zoom = 1;
 
@@ -159,6 +167,7 @@ void Grid::print_grid(){
             day++;
             nest->update_nest();
             ants = nest->getAnts();
+            write_gnuplot(cmptr_ant,ofs);
 
 
             clock.restart();
@@ -251,6 +260,8 @@ void Grid::print_grid(){
 
     }
 
+    ofs.close();
+   // system("start gnuplot ../etc/command.gp ");
 
 }
 
