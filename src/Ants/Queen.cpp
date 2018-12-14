@@ -21,13 +21,20 @@ void Queen::update(){
     if (getAge() > QUEEN_LIFE_EXPECTANCY) {
         die();
     }else {
-        eat();
-        if (age > 1) {
-            give_birth();
-        } else { // the first day she gave birth to a scout
-            nest->add_ant(new Scout(nest));
-            give_birth();
+        cout << "debut queen" << endl;
+        if(eat()){
+
+
+            if (age > 1) {
+                give_birth();
+            } else { // the first day she gave birth to a scout
+                nest->add_ant(new Scout(nest));
+                give_birth();
+            }
         }
+        cout << "fin queen" << endl;
+
+
     }
 }
 
@@ -35,11 +42,13 @@ void Queen::update(){
  * the ant will eat his daily food dose needed to survive.
  * If there's not enough food in the nest, the ant will simply die.
  */
-void Queen::eat(){
+bool Queen::eat(){
     if(nest->getFood() > DAILY_FOOD_CONSUMPTION_QUEEN){
          nest->setFood(nest->getFood()- DAILY_FOOD_CONSUMPTION_QUEEN);
+         return true;
     }else{
         this->die();
+        return false;
     }
 }
 

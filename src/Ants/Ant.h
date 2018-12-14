@@ -27,7 +27,7 @@ public:
     void setAge(int age);
 
     virtual void update() = 0;
-    virtual void eat() = 0;
+    virtual bool eat() = 0;
     virtual void die() = 0;
 
 

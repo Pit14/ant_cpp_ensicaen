@@ -20,7 +20,7 @@ public:
     virtual void die();
     void move(int x, int y);
     void find_move();
-    virtual void eat();
+    virtual bool eat();
     virtual void update();
     Scout(Nest *n);
     bool try_to_move(int x, int y,Cell ** m);

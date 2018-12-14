@@ -40,10 +40,12 @@ void Worker::move(int x, int y) {
     current_coord.setX(x);
     current_coord.setY(y);
 
-//    if(!is_carriyng_food){
-//        Coord c = Coord(x,y);
-//        path_to_nest.push(c);
-//    }
+    if(!is_carriyng_food){
+        Coord c = Coord(x,y);
+        path_to_nest.push(c);
+    }else if(is_carriyng_food && !path_to_nest.empty()){
+        path_to_nest.pop();
+    }
 
 }
 
@@ -58,32 +60,38 @@ void Worker::update(){
     if (getAge() > LIFE_EXPECTANCY) {
         die();
     }else{
-        eat(); // we eat wether we're minor or major
 
-        if(!is_minor) { // is not minor
-            if(!is_carriyng_food){ // if we are not carrying food we move.
-                find_move();
-            }else{ // if we are carrying food, we're going back to the nest by following the path to nest
-                if(!path_to_nest.empty()){
-                    cout << "not empty" << endl;
+         if(eat()){ // we eat wether we're minor or major
 
-                    find_move();
-                    //move(path_to_nest.top().getX(),path_to_nest.top().getY());
-                }else{ // we're on the nest
-                    find_move();
+             if(!is_minor) { // is not minor
+                 if(!is_carriyng_food){ // if we are not carrying food we move.
+                     find_move();
+                 }else{ // if we are carrying food, we're going back to the nest by following the path to nest
+                     if(!path_to_nest.empty()){
+                         cout << "not empty" << endl;
 
-                    //cout << "food deposit" << endl;
+                         find_move();
+                         // move(path_to_nest.top().getX(),path_to_nest.top().getY());
+                     }else{ // we're on the nest
+                         find_move();
 
-                    is_carriyng_food = false;
-                    nest->setFood(nest->getFood()+1);
-                }
-            }
-        }else{ // is minor
-            if(getAge()>= WORKER_MINOR_DAY){
-                setIs_minor(false);
-            }
-        }
+                         cout << "food deposit" << endl;
+
+                         is_carriyng_food = false;
+                         nest->setFood(nest->getFood()+1);
+                     }
+                 }
+             }else{ // is minor
+                 if(getAge()>= WORKER_MINOR_DAY){
+                     setIs_minor(false);
+                 }
+             }
+
+         }
+
+
     }
+
 }
 
 
@@ -100,8 +108,13 @@ bool Worker::try_to_move(int x,int y, Cell ** m){
         if (m[x][y].getState() != BLOCKED && !m[x][y].getHide() ) {
                 move(x, y);
                 if(m[x][y].getState() == FOOD){
+
                     //cout << "Food : " <<  m[x][y].getFood() << endl;
-                   // path_to_nest.pop();
+
+                    if(!path_to_nest.empty()){
+                        path_to_nest.pop();
+                    }
+
                     is_carriyng_food = true;
                     m[x][y].TakeFood();
                     clear_path_to_nest();
@@ -163,11 +176,13 @@ void Worker::find_move() {
  * the ant will eat his daily food dose needed to survive.
  * If there's not enough food in the nest, the ant will simply die.
  */
-void Worker::eat(){
+bool Worker::eat(){
     if(nest->getFood()<DAILY_FOOD_CONSUMPTION_ANT){ // not enough food, ant die.
         die();
+        return false;
     }else{
         nest->setFood(nest->getFood()-DAILY_FOOD_CONSUMPTION_ANT);
+        return true;
     }
 }
 

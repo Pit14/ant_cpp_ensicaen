@@ -18,7 +18,7 @@ public:
     Queen(Nest *n);
 
     virtual void update();
-    virtual void eat();
+    virtual bool eat();
     virtual void die();
 
     void give_birth();

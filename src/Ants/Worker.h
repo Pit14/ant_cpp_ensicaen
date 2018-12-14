@@ -27,7 +27,7 @@ public:
     virtual void die();
     void drop_food();
     void move(int x, int y);
-    virtual void eat();
+    virtual bool eat();
     virtual void update();
     Worker(Nest *n);
 
