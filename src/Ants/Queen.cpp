@@ -26,6 +26,7 @@ void Queen::update(){
                 give_birth();
             } else { // the first day she gave birth to a scout
                 nest->add_ant(new Scout(nest));
+                //nest->add_ant(new Worker(nest));
                 give_birth();
             }
         }
