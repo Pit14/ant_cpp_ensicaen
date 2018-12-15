@@ -41,9 +41,9 @@ void Worker::move(int x, int y) {
     current_coord.setY(y);
 
     if(!is_carriyng_food){
-        cout << x << " " << y << endl;
+        //cout << x << " " << y << endl;
         Coord c = Coord(x,y);
-        cout << c.getX() << " "<< c.getY() << endl;
+        //cout << c.getX() << " "<< c.getY() << endl;
         path_to_nest.push(c);
     }else if(is_carriyng_food && !path_to_nest.empty()){
       //  path_to_nest.pop();
@@ -54,7 +54,7 @@ void Worker::move(int x, int y) {
 void Worker::move_back_to_nest(int x, int y){
     current_coord.setX(x);
     current_coord.setY(y);
-    cout << current_coord.getX() << " " << current_coord.getY() << endl;
+    //cout << current_coord.getX() << " " << current_coord.getY() << endl;
     path_to_nest.pop();
 }
 
@@ -77,7 +77,7 @@ void Worker::update(){
                      find_move();
                  }else{ // if we are carrying food, we're going back to the nest by following the path to nest
                      if(!path_to_nest.empty()){
-                         cout << "not empty" << endl;
+                         //cout << "not empty" << endl;
 
                          //find_move();
                          move_back_to_nest(path_to_nest.top().getX(),path_to_nest.top().getY());
@@ -86,6 +86,7 @@ void Worker::update(){
                      }else{ // we're on the nest
                          //find_move();
 
+                         path_to_nest.push(current_coord);
                         //cout << "food deposit" << endl;
 
                          is_carriyng_food = false;
