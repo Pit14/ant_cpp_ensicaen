@@ -31,6 +31,7 @@ public:
     virtual bool eat();
     virtual void update();
     Worker(Nest *n);
+    int get_last_doublon(int i, vector<Coord> l);
 
 
 };

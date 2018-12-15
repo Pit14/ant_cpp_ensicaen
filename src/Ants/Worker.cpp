@@ -13,13 +13,13 @@ Worker::Worker(Nest *n):
     is_carriyng_food = false;
     current_coord.setY(round(HEIGHT/2));
     current_coord.setX(round(WIDTH/2));
-    //Coord c = Coord(current_coord.getX(),current_coord.getY());
-    cout << "current  coord : " << endl;
-    cout << current_coord.getX() << endl;
+//    //Coord c = Coord(current_coord.getX(),current_coord.getY());
+//    cout << "current  coord : " << endl;
+//    cout << current_coord.getX() << endl;
 
     path_to_nest.push(current_coord);
 
-    cout << "pathtonest coord : " << endl;
+    //cout << "pathtonest coord : " << endl;
     path_to_nest.top().getX();
 }
 
@@ -92,16 +92,16 @@ void Worker::update(){
                          //find_move();
                          path_to_nest.push(current_coord);
 
-                         cout << "food deposit" << endl;
+                        //cout << "food deposit" << endl;
 
                          is_carriyng_food = false;
-                         cout << "coord " << current_coord.getX() << endl;
-                         cout << "coord " << current_coord.getY() << endl;
-
-                         cout << "before " << nest->getFood() << endl;
+//                         cout << "coord " << current_coord.getX() << endl;
+//                         cout << "coord " << current_coord.getY() << endl;
+//
+//                         cout << "before " << nest->getFood() << endl;
 
                          nest->setFood(nest->getFood()+1);
-                         cout << "after " << nest->getFood() << endl;
+//                         cout << "after " << nest->getFood() << endl;
 
 
                      }
@@ -134,16 +134,15 @@ bool Worker::try_to_move(int x,int y, Cell ** m){
 
             if(m[x][y].getState() == FOOD){
 
-                    //cout << "Food : " <<  m[x][y].getFood() << endl;
-//
-//                    if(!path_to_nest.empty()){
-//                        path_to_nest.pop();
-//                    }
 
-                    is_carriyng_food = true;
-                    m[x][y].TakeFood();
-                    clear_path_to_nest();
-                }
+                is_carriyng_food = true;
+                m[x][y].TakeFood();
+               // cout << "SIZE BEFORE CLEARING : " <<  path_to_nest.size() << endl;
+
+                clear_path_to_nest();
+                //cout << "SIZE AFTER CLEARING : " <<  path_to_nest.size() << endl;
+
+            }
             move(x, y);
 
 
@@ -154,9 +153,61 @@ bool Worker::try_to_move(int x,int y, Cell ** m){
 }
 
 void Worker::clear_path_to_nest(){
+    int size = path_to_nest.size();
+    int i,d,j;
+    std::vector<Coord> l;
+//    cout << "debut clear" << endl;
+//    cout << "path size debut : " << path_to_nest.size() << endl;
+//
+//    cout << path_to_nest.top().getX() << endl;
+//    cout << path_to_nest.top().getY() << endl;
 
+    for(i =0; i <size;i++){
+        l.push_back(path_to_nest.top());
+        path_to_nest.pop();
+    }
+//    cout << "path size : " << path_to_nest.size() << endl;
+//    cout << "vector  size : " << l.size() << endl;
+    size = l.size();
+
+
+    for(i=0;i<size;i++){
+        if(l[i].getX() != -1){
+            d = get_last_doublon(i,l);
+            if( d!= -1){
+                for(j=i+1;j<=d;j++){
+                    l[j].setX(-1); // this cell is redondant
+                }
+            }
+        }
+
+    }
+
+
+
+    for(i =0; i <size;i++){
+        if(l[size-i-1].getX() != -1){
+            path_to_nest.push(l[size-i-1]);
+        }
+    }
+//    cout << path_to_nest.top().getX() << endl;
+//    cout << path_to_nest.top().getY() << endl;
+//    cout << "fin clear" << endl;
 }
 
+int Worker::get_last_doublon(int i, vector<Coord> l){
+    Coord c = l[i];
+    int last_doublon_index = -1;
+    for(int j=i+1;j<l.size();j++){ // we are going through the vector to find another doublon
+        if(l[j].getX() == c.getX() && l[j].getY() == c.getY()){ // Doublon ! we update the last index
+            last_doublon_index = j;
+        }
+    }
+//    cout << "VECOTR : " << l[i].getX() << endl;
+   // cout << "last doublon : " << last_doublon_index << endl;
+
+    return last_doublon_index;
+}
 /***
  * the ant will find somewhere it can move. Randomly for the moment.
  */
