@@ -34,6 +34,7 @@ Grid::Grid()
     rock.loadFromFile("../Ressources/pic/rock.png");
     fog.loadFromFile("../Ressources/pic/black.jpg");
     worker.loadFromFile("../Ressources/pic/ouvriere.png");
+    soldier.loadFromFile("../Ressources/pic/soldier.png");
     ping = 700;
 }
 
@@ -81,6 +82,11 @@ int Grid::loadAnts(sf::RenderWindow &window, list<Ant*> ants) {
         if((dynamic_cast<Worker*>(*it) != nullptr))
         {
             sprites.setTexture(worker);
+        }
+
+        if((dynamic_cast<Soldier*>(*it) != nullptr))
+        {
+            sprites.setTexture(soldier);
         }
        // if(typeid(*it).name() == "Worker")
             sprites.setTextureRect(sf::IntRect(0, 0, 32, 32));

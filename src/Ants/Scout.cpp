@@ -39,10 +39,24 @@ void Scout::find_move() {
     Cell ** m = nest->getMap();
 
     bool has_moved = false;
+    int indice;
+
+    std::vector <int> neighbour_In_Fog;
+    neighbour_In_Fog = checkAllNeighbour(current_coord.getX(),current_coord.getY());
+
 
     while(!has_moved) {
 
-        int rand_dir = rand() % 8 +1;
+        int rand_dir;
+        if(neighbour_In_Fog.size() != 0) {
+
+            indice = rand() % neighbour_In_Fog.size();
+            rand_dir = neighbour_In_Fog.at( indice);
+            neighbour_In_Fog.erase(neighbour_In_Fog.begin()+indice);
+
+       } else {
+           rand_dir = rand() % 8 +1;
+       }
 
         switch (rand_dir) {
 
@@ -73,6 +87,8 @@ void Scout::find_move() {
         }
 
     }
+
+
 }
 
 /***
@@ -101,6 +117,66 @@ void Scout::discoverMap(int x, int y) {
     Cell ** m = nest->getMap();
     if ( !Grid::isOutOfLimit(x,y) && m[x][y].getHide())
         m[x][y].setVisible();
+}
+
+std::vector <int> Scout::checkAllNeighbour(  int x, int y){
+
+    std::vector <int> neighbour_In_Fog;
+
+    if( checkNeighbourFog(x-1,y-1))
+        neighbour_In_Fog.push_back(1);
+
+    if( checkNeighbourFog(x,y-1))
+        neighbour_In_Fog.push_back(2);
+
+    if( checkNeighbourFog(x+1,y-1))
+        neighbour_In_Fog.push_back(3);
+
+    if( checkNeighbourFog(x-1,y))
+        neighbour_In_Fog.push_back(4);
+
+    if( checkNeighbourFog(x+1,y))
+        neighbour_In_Fog.push_back(5);
+
+    if( checkNeighbourFog(x-1,y+1))
+        neighbour_In_Fog.push_back(6);
+
+    if( checkNeighbourFog(x,y+1))
+        neighbour_In_Fog.push_back(7);
+
+    if( checkNeighbourFog(x+1,y+1))
+        neighbour_In_Fog.push_back(8);
+
+    return neighbour_In_Fog;
+
+}
+bool Scout::checkNeighbourFog(int x, int y) {
+
+    if(isInFog(x+1,y))
+        return true;
+    if(isInFog(x-1,y))
+        return true;
+    if(isInFog(x,y+1))
+        return true;
+    if(isInFog(x,y-1))
+        return true;
+    if(isInFog(x+1,y+1))
+        return true;
+    if(isInFog(x-1,y-1))
+        return true;
+    if(isInFog(x+1,y-1))
+        return true;
+    if(isInFog(x-1,y+1))
+        return true;
+
+    return false;
+}
+
+bool Scout::isInFog( int x, int y) {
+    Cell ** m = nest->getMap();
+    if ( !Grid::isOutOfLimit(x,y) && m[x][y].getHide())
+        return true;
+    return false;
 }
 
 /***

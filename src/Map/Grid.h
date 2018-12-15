@@ -45,6 +45,7 @@ public:
     sf::Texture rock;
     sf::Texture fog;
     sf::Texture worker;
+    sf::Texture soldier;
 
 private:
     Nest *nest;
