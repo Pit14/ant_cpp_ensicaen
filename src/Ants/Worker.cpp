@@ -42,9 +42,9 @@ void Worker::move(int x, int y) {
 
     if(!is_carriyng_food){
         //cout << x << " " << y << endl;
-        Coord c = Coord(x,y);
+       // Coord c = Coord(x,y);
         //cout << c.getX() << " "<< c.getY() << endl;
-        path_to_nest.push(c);
+        path_to_nest.push(current_coord);
     }else if(is_carriyng_food && !path_to_nest.empty()){
       //  path_to_nest.pop();
     }

@@ -261,7 +261,8 @@ void Grid::print_grid(){
     }
 
     ofs.close();
-    system("start \"C:\\Program Files\\gnuplot\\bin\\gnuplot.exe\" ../etc/command.gp ");
+    system("start \"D:\\Program Files\\gnuplot\\bin\\gnuplot.exe\" ../etc/command.gp ");
+
 
 }
 
