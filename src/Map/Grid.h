@@ -32,6 +32,7 @@ public:
     void loadSprite(sf::RenderWindow &window);
     int loadAnts(sf::RenderWindow &window, list<Ant*> ants);
     void show_stat(sf::RenderWindow &window, int cmptr_ant, sf::Text text);
+    void write_gnuplot( int cmptr_ant, std::ofstream &ofs);
     Cell **array;
     double rock_value;
     double food_number;
