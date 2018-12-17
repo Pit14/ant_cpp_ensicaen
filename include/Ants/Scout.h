@@ -9,7 +9,8 @@
 #include "Ant.h"
 #include "../Map/Grid.h"
 
-class Scout: public Ant {
+
+class colony::Scout: public Ant {
 
 private:
     bool is_minor;

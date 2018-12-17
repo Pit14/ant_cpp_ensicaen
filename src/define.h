@@ -5,7 +5,15 @@
 #ifndef C_DEFINE_H
 #define C_DEFINE_H
 
+namespace  colony {
+    class BadAnt;
+    class Ant;
+    class Queen;
+    class Scout;
+    class Soldier;
+    class Worker;
 
+}
 namespace  DATA {
     const int LIFE_EXPECTANCY = 365;
     const int  EXECUTION_DELAY = 10;

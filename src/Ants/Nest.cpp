@@ -6,6 +6,7 @@
 #include "../../include/Ants/Queen.h"
 using namespace FOODS;
 
+
 Nest::Nest(Cell ** m) {
     food = INITIAL_FOOD_ON_NEST;
     map = m;

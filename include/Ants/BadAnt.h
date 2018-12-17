@@ -5,13 +5,14 @@
 #include "../Map/Cell.h"
 #include "Nest.h"
 
-using namespace std;
+
 
 #ifndef C_BADANT_H
 #define C_BADANT_H
 
+using namespace std;
 
-class BadAnt: public Ant {
+class colony::BadAnt: public Ant {
 
 public:
 

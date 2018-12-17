@@ -1,14 +1,17 @@
 //
 // Created by edgar on 28/11/2018.
 //
-using namespace std;
+
 
 #include "../../include/Ants/BadAnt.h"
 #include "../../include/Ants/Nest.h"
 #include "../../include/Map/Grid.h"
 
+
 using namespace DATA;
 using namespace FOODS;
+using namespace std;
+
 BadAnt::BadAnt(Nest *n):
         Ant(*n)
 {

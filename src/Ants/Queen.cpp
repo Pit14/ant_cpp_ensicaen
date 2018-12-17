@@ -7,7 +7,7 @@
 
 using namespace DATA;
 using namespace FOODS;
-
+//using namespace colony;
 Queen::Queen(Nest *n):
     Ant(*n)
 {

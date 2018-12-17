@@ -12,7 +12,8 @@
 #include "Worker.h"
 #include "Scout.h"
 
-class Queen:public Ant {
+
+class colony::Queen:public Ant {
 
 public:
     Queen(Nest *n);

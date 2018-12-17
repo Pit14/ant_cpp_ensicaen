@@ -11,7 +11,7 @@ using namespace std;
 #include "../Map/Grid.h"
 
 
-class Worker: public Ant {
+class colony::Worker: public Ant {
 
 protected:
     bool is_minor;

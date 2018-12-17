@@ -12,7 +12,8 @@ using namespace std;
 #include "BadAnt.h"
 #include "../Map/Cell.h"
 
-class Soldier: public Ant {
+
+class colony::Soldier: public Ant {
 
 protected:
 

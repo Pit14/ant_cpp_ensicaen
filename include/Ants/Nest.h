@@ -10,6 +10,8 @@
 #include "Ant.h"
 #include "../Map/Cell.h"
 
+using namespace colony;
+
 class Nest {
 
 protected :

@@ -1,7 +1,7 @@
 //
 // Created by edgar on 28/11/2018.
 //
-using namespace std;
+
 
 #ifndef C_ANT_H
 #define C_ANT_H
@@ -11,11 +11,14 @@ using namespace std;
 #include <stack>
 #include <cmath>
 #include "../../src/define.h"
+
+using namespace std;
 using namespace WIND;
 
 class Nest;
 
-class Ant {
+
+class colony::Ant {
 
 public:
     Ant(Nest n, Coord = {(int) round(HEIGHT/2),(int) round(WIDTH/2)}, int = 0);
