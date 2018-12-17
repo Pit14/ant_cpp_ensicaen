@@ -6,7 +6,7 @@
 #define C_GRID_H
 
 #include "Cell.h"
-#include "../define.h"
+#include "../../src/define.h"
 #include "../Ants/Nest.h"
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -34,8 +34,7 @@ public:
     void show_stat(sf::RenderWindow &window, int cmptr_ant, sf::Text text);
     void write_gnuplot( int cmptr_ant, std::ofstream &ofs);
     Cell **array;
-    double rock_value;
-    double food_number;
+
 
     sf::Sprite sprites;
     sf::Texture fourmis;
@@ -53,6 +52,9 @@ private:
     int day;
     int ping;
 
+protected:
+    double rock_value;
+    double food_number;
 };
 
 

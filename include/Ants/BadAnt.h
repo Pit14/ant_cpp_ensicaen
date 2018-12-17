@@ -18,10 +18,8 @@ public:
     virtual void die();
     void move(int x, int y);
     virtual bool eat();
-    virtual void update();
-    void move_back_to_nest(int x, int y);
+    virtual bool update();
     bool try_to_move(int x,int y, Cell ** m);
-    void clear_path_to_nest();
     int get_last_doublon(int i, vector<Coord> l);
     void find_move();
     BadAnt(Nest *n);

@@ -21,7 +21,7 @@ public:
 
     Nest(Cell ** map);
 
-   void update_nest();
+   bool update_nest();
 
     void setAnts(const list<Ant*> &ants);
 

@@ -3,8 +3,8 @@
 //
 using namespace std;
 
-#include "Ant.h"
-#include "Nest.h"
+#include "../../include/Ants/Ant.h"
+#include "../../include/Ants/Nest.h"
 
 Ant::~Ant() {
 

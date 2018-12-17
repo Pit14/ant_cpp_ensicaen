@@ -17,12 +17,11 @@ class Queen:public Ant {
 public:
     Queen(Nest *n);
 
-    virtual void update();
+    virtual bool update();
     virtual bool eat();
     virtual void die();
 
     void give_birth();
-    //Coord position;
 };
 
 

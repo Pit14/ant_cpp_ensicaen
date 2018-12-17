@@ -3,10 +3,12 @@
 //
 using namespace std;
 
-#include "BadAnt.h"
-#include "Nest.h"
-#include "../Map/Grid.h"
+#include "../../include/Ants/BadAnt.h"
+#include "../../include/Ants/Nest.h"
+#include "../../include/Map/Grid.h"
 
+using namespace DATA;
+using namespace FOODS;
 BadAnt::BadAnt(Nest *n):
         Ant(*n)
 {
@@ -80,15 +82,9 @@ void BadAnt::move(int x, int y) {
     path_to_nest.push(current_coord);
 }
 
-void BadAnt::move_back_to_nest(int x, int y){
-    current_coord.setX(x);
-    current_coord.setY(y);
-    //cout << current_coord.getX() << " " << current_coord.getY() << endl;
-    path_to_nest.pop();
-}
 
 
-void BadAnt::update(){
+bool BadAnt::update(){
 
     setAge(getAge() + 1);
     int x,y;
@@ -120,6 +116,7 @@ void BadAnt::update(){
 
 
     }
+    return false;
 
 }
 
@@ -141,49 +138,6 @@ bool BadAnt::try_to_move(int x,int y, Cell ** m){
         }
     }
     return false;
-}
-
-void BadAnt::clear_path_to_nest(){
-    int size = path_to_nest.size();
-    int i,d,j;
-    std::vector<Coord> l;
-//    cout << "debut clear" << endl;
-//    cout << "path size debut : " << path_to_nest.size() << endl;
-//
-//    cout << path_to_nest.top().getX() << endl;
-//    cout << path_to_nest.top().getY() << endl;
-
-    for(i =0; i <size;i++){
-        l.push_back(path_to_nest.top());
-        path_to_nest.pop();
-    }
-//    cout << "path size : " << path_to_nest.size() << endl;
-//    cout << "vector  size : " << l.size() << endl;
-    size = l.size();
-
-
-    for(i=0;i<size;i++){
-        if(l[i].getX() != -1){
-            d = get_last_doublon(i,l);
-            if( d!= -1){
-                for(j=i+1;j<=d;j++){
-                    l[j].setX(-1); // this cell is redondant
-                }
-            }
-        }
-
-    }
-
-
-
-    for(i =0; i <size;i++){
-        if(l[size-i-1].getX() != -1){
-            path_to_nest.push(l[size-i-1]);
-        }
-    }
-//    cout << path_to_nest.top().getX() << endl;
-//    cout << path_to_nest.top().getY() << endl;
-//    cout << "fin clear" << endl;
 }
 
 int BadAnt::get_last_doublon(int i, vector<Coord> l){

@@ -2,8 +2,9 @@
 // Created by Jerome on 05/12/2018.
 //
 
-#include "Nest.h"
-#include "Queen.h"
+#include "../../include/Ants/Nest.h"
+#include "../../include/Ants/Queen.h"
+using namespace FOODS;
 
 Nest::Nest(Cell ** m) {
     food = INITIAL_FOOD_ON_NEST;
@@ -16,11 +17,21 @@ Nest::Nest(Cell ** m) {
  * we call this function each day,
  * it will call the update function of each ant in the list of ant
  */
-void Nest::update_nest() {
+bool Nest::update_nest() {
+
+    bool res;
+    bool exit;
     for(std::list<Ant*>::iterator it = ants.begin(); it!=ants.end(); ++it)
     {
-        (*it)->update();
+        res = (*it)->update();
+        if (res == true)
+            exit = true;
     }
+
+    if (exit == true)
+        return true;
+
+    return false;
 }
 
 const list<Ant *> &Nest::getAnts() const {

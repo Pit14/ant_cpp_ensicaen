@@ -3,11 +3,12 @@
 //
 using namespace std;
 
-#include "Soldier.h"
-#include "BadAnt.h"
-#include "Nest.h"
-#include "../Map/Grid.h"
-
+#include "../../include/Ants/Soldier.h"
+#include "../../include/Ants/BadAnt.h"
+#include "../../include/Ants/Nest.h"
+#include "../../include/Map/Grid.h"
+using namespace DATA;
+using namespace FOODS;
 Soldier::Soldier(Nest *n):
         Ant(*n)
 {
@@ -37,7 +38,7 @@ void Soldier::move_back_to_nest(int x, int y){
     //cout << current_coord.getX() << " " << current_coord.getY() << endl;
     path_to_nest.pop();
 }
-void Soldier::update(){
+bool Soldier::update(){
 
     setAge(getAge() + 1);
     int x,y;
@@ -70,6 +71,7 @@ void Soldier::update(){
 
     }
 
+    return false;
 }
 
 
@@ -81,7 +83,9 @@ bool Soldier::try_to_move(int x,int y, Cell ** m){
 
                // si on fait demi-tour faire --> clear_path_to_nest();
 
+            m[x][y].takeAnt();
             move(x, y);
+            m[x][y].addAnt();
             day_without_nest++;
             if( day_without_nest > when_return_nest)
                 clear_path_to_nest();

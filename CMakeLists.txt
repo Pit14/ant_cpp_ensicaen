@@ -5,7 +5,7 @@ project(${PROJECT_NAME})
 set(CMAKE_CXX_STANDARD 14)
 set(SFML_ROOT D:/Lib/SFML)
 
-add_executable(Project src/main.cpp src/Ants/Ant.cpp src/Ants/Ant.h src/Map/Coord.cpp src/Map/Coord.h src/Ants/Worker.cpp src/Ants/Worker.h src/Map/Grid.h src/Map/Grid.cpp src/Map/Cell.h src/Map/Cell.cpp src/Ants/BadAnt.cpp src/Ants/BadAnt.h src/Ants/Soldier.cpp src/Ants/Soldier.h src/Ants/Queen.cpp src/Ants/Queen.h src/Ants/Scout.cpp src/Ants/Scout.h src/define.h src/Ants/Nest.cpp src/Ants/Nest.h)
+add_executable(Project src/main.cpp src/Ants/Ant.cpp include/Ants/Ant.h src/Map/Coord.cpp include/Map/Coord.h src/Ants/Worker.cpp include/Ants/Worker.h include/Map/Grid.h src/Map/Grid.cpp include/Map/Cell.h src/Map/Cell.cpp src/Ants/BadAnt.cpp include/Ants/BadAnt.h src/Ants/Soldier.cpp include/Ants/Soldier.h src/Ants/Queen.cpp include/Ants/Queen.h src/Ants/Scout.cpp include/Ants/Scout.h src/define.h src/Ants/Nest.cpp include/Ants/Nest.h)
 
 
 set(SFML_STATIC_LIBRARIES TRUE)

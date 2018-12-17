@@ -3,8 +3,11 @@
 //
 using namespace std;
 
-#include "Worker.h"
-#include "Nest.h"
+#include "../../include/Ants/Worker.h"
+#include "../../include/Ants/Nest.h"
+using namespace WIND;
+using namespace DATA;
+using namespace FOODS;
 
 Worker::Worker(Nest *n):
         Ant(*n)
@@ -62,7 +65,7 @@ void Worker::move_back_to_nest(int x, int y){
  * function that will be called each day by each ant, they will just do their action for the day :
  * aging, eating, moving, carrying food, dying....
  */
-void Worker::update(){
+bool Worker::update(){
     setAge(getAge() + 1);
     int x,y;
 
@@ -104,6 +107,7 @@ void Worker::update(){
 
     }
 
+    return false;
 }
 
 
@@ -117,7 +121,7 @@ void Worker::update(){
 bool Worker::try_to_move(int x,int y, Cell ** m){
 
     if(!Grid::isOutOfLimit(x,y)) {
-        if (m[x][y].getState() != BLOCKED && !m[x][y].getHide() ) {
+        if (m[x][y].getState() != BLOCKED && !m[x][y].getHide() && m[x][y].getCurrentAnts()<10) {
 
             if(m[x][y].getState() == FOOD){
 
@@ -130,7 +134,9 @@ bool Worker::try_to_move(int x,int y, Cell ** m){
                 //cout << "SIZE AFTER CLEARING : " <<  path_to_nest.size() << endl;
 
             }
+            m[x][y].takeAnt();
             move(x, y);
+            m[x][y].addAnt();
 
 
             return true;

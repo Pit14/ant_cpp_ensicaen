@@ -10,7 +10,8 @@ using namespace std;
 #include "../Map/Coord.h"
 #include <stack>
 #include <cmath>
-#include "../define.h"
+#include "../../src/define.h"
+using namespace WIND;
 
 class Nest;
 
@@ -26,7 +27,7 @@ public:
 
     void setAge(int age);
 
-    virtual void update() = 0;
+    virtual bool update() = 0;
     virtual bool eat() = 0;
     virtual void die() = 0;
 
