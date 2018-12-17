@@ -46,6 +46,7 @@ public:
     sf::Texture fog;
     sf::Texture worker;
     sf::Texture soldier;
+    sf::Texture badAnt;
 
 private:
     Nest *nest;
