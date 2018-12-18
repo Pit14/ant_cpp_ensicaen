@@ -55,6 +55,8 @@ void Cell::addAnt(){
 void Cell::takeAnt(){
     current_ants--;
 }
+
+
 void Cell::setValue( Coord* current_coords, float foods, int pheros, int currents_ants) {
     current_coord = current_coords;
     food = foods;

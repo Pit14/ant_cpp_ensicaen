@@ -34,11 +34,15 @@ bool Nest::update_nest() {
 
     return false;
 }
-
+/***
+ * return the list of the ant
+ */
 const list<Ant *> &Nest::getAnts() const {
     return ants;
 }
-
+/***
+ * return the food in the colony
+ */
 double Nest::getFood() const {
     return food;
 }
@@ -46,15 +50,24 @@ double Nest::getFood() const {
 void Nest::setAnts(const list<Ant *> &ants) {
     Nest::ants = ants;
 }
-
+/***
+ * modify the count of food in the colony
+ * @param food
+ */
 void Nest::setFood(double food) {
     Nest::food = food;
 }
-
+/***
+ * add an ant to the list of ant
+ * @param a
+ */
 void Nest::add_ant(Ant *a) {
     ants.push_back(a);
 }
 
+/***
+ * return the map
+ */
 Cell **Nest::getMap() const {
     return map;
 }

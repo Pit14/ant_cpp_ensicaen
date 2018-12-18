@@ -25,6 +25,11 @@ void Soldier::die() {
     nest->kill_ant(this);
 }
 
+/***
+ * set the current position of the ant and add the last position in a container
+ * @param x
+ * @param y
+ */
 void Soldier::move(int x, int y) {
     current_coord.setX(x);
     current_coord.setY(y);
@@ -38,6 +43,10 @@ void Soldier::move_back_to_nest(int x, int y){
     //cout << current_coord.getX() << " " << current_coord.getY() << endl;
     path_to_nest.pop();
 }
+
+/***
+ * Main function of badAnt, main skills of the ant should be here
+ */
 bool Soldier::update(){
 
     setAge(getAge() + 1);
@@ -64,24 +73,22 @@ bool Soldier::update(){
             } else {
 
                 find_move();
-
             }
-
         }
-
     }
-
     return false;
 }
 
-
+/***
+ * will check if the coord is off limit, and if it's not, the ant will move on the cell corresponding
+ * @param x : coord to wich you want to move
+ * @param y : coord to wich you want to move
+ * @param m : pointer pointing at the map
+ */
 bool Soldier::try_to_move(int x,int y, Cell ** m){
 
     if(!Grid::isOutOfLimit(x,y)) {
         if (m[x][y].getState() != BLOCKED && !m[x][y].getHide() ) {
-
-
-               // si on fait demi-tour faire --> clear_path_to_nest();
 
             m[x][y].takeAnt();
             move(x, y);
@@ -97,23 +104,19 @@ bool Soldier::try_to_move(int x,int y, Cell ** m){
     return false;
 }
 
-
+/***
+ * modify the path to nest to get a shorter one
+ */
 void Soldier::clear_path_to_nest(){
     int size = path_to_nest.size();
     int i,d,j;
     std::vector<Coord> l;
-//    cout << "debut clear" << endl;
-//    cout << "path size debut : " << path_to_nest.size() << endl;
-//
-//    cout << path_to_nest.top().getX() << endl;
-//    cout << path_to_nest.top().getY() << endl;
 
     for(i =0; i <size;i++){
         l.push_back(path_to_nest.top());
         path_to_nest.pop();
     }
-//    cout << "path size : " << path_to_nest.size() << endl;
-//    cout << "vector  size : " << l.size() << endl;
+
     size = l.size();
 
 
@@ -129,18 +132,18 @@ void Soldier::clear_path_to_nest(){
 
     }
 
-
-
     for(i =0; i <size;i++){
         if(l[size-i-1].getX() != -1){
             path_to_nest.push(l[size-i-1]);
         }
     }
-//    cout << path_to_nest.top().getX() << endl;
-//    cout << path_to_nest.top().getY() << endl;
-//    cout << "fin clear" << endl;
-}
 
+}
+/***
+ * Use to clear the road to the spawn when the ant is returning home
+ * @param i
+ * @param l
+ */
 int Soldier::get_last_doublon(int i, vector<Coord> l){
     Coord c = l[i];
     int last_doublon_index = -1;
@@ -149,8 +152,7 @@ int Soldier::get_last_doublon(int i, vector<Coord> l){
             last_doublon_index = j;
         }
     }
-//    cout << "VECOTR : " << l[i].getX() << endl;
-    // cout << "last doublon : " << last_doublon_index << endl;
+
 
     return last_doublon_index;
 }
@@ -197,6 +199,9 @@ void Soldier::find_move() {
 
     }
 }
+/***
+ * eat some food in the colony reserve to survive
+ */
 bool Soldier::eat(){
     if(nest->getFood()<DAILY_FOOD_CONSUMPTION_ANT){ // not enough food, ant die.
         die();

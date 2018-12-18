@@ -7,7 +7,7 @@
 
 using namespace DATA;
 using namespace FOODS;
-//using namespace colony;
+
 Queen::Queen(Nest *n):
     Ant(*n)
 {
@@ -20,7 +20,7 @@ Queen::Queen(Nest *n):
  */
 bool Queen::update(){
     setAge(getAge() + 1);
-    //cout << nest->getFood() << endl;
+
     if (getAge() > QUEEN_LIFE_EXPECTANCY) {
         die();
         return true;
@@ -31,7 +31,6 @@ bool Queen::update(){
                 give_birth();
             } else { // the first day she gave birth to a scout
                 nest->add_ant(new Scout(nest));
-                //nest->add_ant(new Worker(nest));
                 give_birth();
             }
         } else

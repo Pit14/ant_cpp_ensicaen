@@ -21,12 +21,9 @@ Scout::Scout(Nest *n):
     for(cpti=0;cpti<HEIGHT-1;cpti++){
         for(cptj=0;cptj<WIDTH-1;cptj++){
             if (m[cptj][cpti].getState()!= BLOCKED && m[cptj][cpti].getState()!=FREE && m[cptj][cpti].getState()!=FOOD) {
-            //    cout << " " << m[cptj][cpti].getState();
-              //  cout << " x " << cptj << " y " << cpti << endl;
-            }
 
+            }
         }
-       // cout << endl;
     }
 
 }
@@ -128,6 +125,12 @@ void Scout::discoverMap(int x, int y) {
         m[x][y].setVisible();
 }
 
+/***
+ * check all the neighbour of the current position to know if one of them is preferable to move
+ * --> to know if a move in that location can remove some fog one the grid
+ * @param x
+ * @param y
+ */
 std::vector <int> Scout::checkAllNeighbour(  int x, int y){
 
     std::vector <int> neighbour_In_Fog;
@@ -159,6 +162,12 @@ std::vector <int> Scout::checkAllNeighbour(  int x, int y){
     return neighbour_In_Fog;
 
 }
+
+/***
+ * check all the neighbour to know if they are in fog
+ * @param x
+ * @param y
+ */
 bool Scout::checkNeighbourFog(int x, int y) {
 
     if(isInFog(x+1,y))
@@ -181,6 +190,11 @@ bool Scout::checkNeighbourFog(int x, int y) {
     return false;
 }
 
+/***
+ * check if the case is in fog
+ * @param x
+ * @param
+ */
 bool Scout::isInFog( int x, int y) {
     Cell ** m = nest->getMap();
     if ( !Grid::isOutOfLimit(x,y) && m[x][y].getHide())

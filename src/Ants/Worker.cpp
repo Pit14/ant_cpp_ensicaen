@@ -80,17 +80,12 @@ bool Worker::update(){
                      find_move();
                  }else{ // if we are carrying food, we're going back to the nest by following the path to nest
                      if(!path_to_nest.empty()){
-                         //cout << "not empty" << endl;
 
-                         //find_move();
                          move_back_to_nest(path_to_nest.top().getX(),path_to_nest.top().getY());
 
-                        // try_to_move();
                      }else{ // we're on the nest
-                         //find_move();
 
                          path_to_nest.push(current_coord);
-                        //cout << "food deposit" << endl;
 
                          is_carriyng_food = false;
                          nest->setFood(nest->getFood()+1);
@@ -101,12 +96,8 @@ bool Worker::update(){
                      setIs_minor(false);
                  }
              }
-
          }
-
-
     }
-
     return false;
 }
 
@@ -128,10 +119,8 @@ bool Worker::try_to_move(int x,int y, Cell ** m){
 
                 is_carriyng_food = true;
                 m[x][y].TakeFood();
-               // cout << "SIZE BEFORE CLEARING : " <<  path_to_nest.size() << endl;
 
                 clear_path_to_nest();
-                //cout << "SIZE AFTER CLEARING : " <<  path_to_nest.size() << endl;
 
             }
             m[x][y].takeAnt();
@@ -149,18 +138,12 @@ void Worker::clear_path_to_nest(){
     int size = path_to_nest.size();
     int i,d,j;
     std::vector<Coord> l;
-//    cout << "debut clear" << endl;
-//    cout << "path size debut : " << path_to_nest.size() << endl;
-//
-//    cout << path_to_nest.top().getX() << endl;
-//    cout << path_to_nest.top().getY() << endl;
 
     for(i =0; i <size;i++){
         l.push_back(path_to_nest.top());
         path_to_nest.pop();
     }
-//    cout << "path size : " << path_to_nest.size() << endl;
-//    cout << "vector  size : " << l.size() << endl;
+
     size = l.size();
 
 
@@ -183,9 +166,6 @@ void Worker::clear_path_to_nest(){
             path_to_nest.push(l[size-i-1]);
         }
     }
-//    cout << path_to_nest.top().getX() << endl;
-//    cout << path_to_nest.top().getY() << endl;
-//    cout << "fin clear" << endl;
 }
 
 int Worker::get_last_doublon(int i, vector<Coord> l){
@@ -196,8 +176,6 @@ int Worker::get_last_doublon(int i, vector<Coord> l){
             last_doublon_index = j;
         }
     }
-//    cout << "VECOTR : " << l[i].getX() << endl;
-   // cout << "last doublon : " << last_doublon_index << endl;
 
     return last_doublon_index;
 }

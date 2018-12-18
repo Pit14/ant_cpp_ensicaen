@@ -12,6 +12,10 @@ using namespace DATA;
 using namespace FOODS;
 using namespace std;
 
+/***
+ * Constuctor of bad ant, it will decide which side they will spawned
+ * @param *n is a references to the nest, it helps to get grid data
+ */
 BadAnt::BadAnt(Nest *n):
         Ant(*n)
 {
@@ -64,20 +68,23 @@ BadAnt::BadAnt(Nest *n):
                     break;
                 }
         }
-
     }
-
-
     path_to_nest.push(current_coord);
 }
 
 
 
-
+/***
+ * delete the ant
+ */
 void BadAnt::die() {
     nest->kill_ant(this);
 }
-
+/***
+ * set the current position of the ant and add the last position in a container
+ * @param x
+ * @param y
+ */
 void BadAnt::move(int x, int y) {
     current_coord.setX(x);
     current_coord.setY(y);
@@ -86,63 +93,45 @@ void BadAnt::move(int x, int y) {
 }
 
 
-
+/***
+ * Main function of badAnt, main skills of the ant should be here
+ */
 bool BadAnt::update(){
 
     setAge(getAge() + 1);
-    int x,y;
 
     if (getAge() > LIFE_EXPECTANCY) {
         die();
     }else{
-
-
-
-
-          /*  if(day_without_nest >= when_return_nest) {
-
-                if(!path_to_nest.empty()){
-                    move_back_to_nest(path_to_nest.top().getX(),path_to_nest.top().getY());
-
-                }else{
-
-                    path_to_nest.push(current_coord);
-                    day_without_nest = 0;
-
-                }
-            } else {*/
-
                 find_move();
-
-          //  }
-
-
 
     }
     return false;
 
 }
-
+/***
+ * test if the choosen future position is available
+ * @param x
+ * @param y
+ * @m array of the grid
+ */
 bool BadAnt::try_to_move(int x,int y, Cell ** m){
 
     if(!Grid::isOutOfLimit(x,y)) {
         if (m[x][y].getState() != BLOCKED ) {
 
-
-            // si on fait demi-tour faire --> clear_path_to_nest();
-
             move(x, y);
-
-      /*      if( day_without_nest > when_return_nest)
-                clear_path_to_nest();*/
-
 
             return true;
         }
     }
     return false;
 }
-
+/***
+ * Use to clear the road to the spawn when the ant is returning home
+ * @param i
+ * @param l
+ */
 int BadAnt::get_last_doublon(int i, vector<Coord> l){
     Coord c = l[i];
     int last_doublon_index = -1;
@@ -151,9 +140,6 @@ int BadAnt::get_last_doublon(int i, vector<Coord> l){
             last_doublon_index = j;
         }
     }
-//    cout << "VECOTR : " << l[i].getX() << endl;
-    // cout << "last doublon : " << last_doublon_index << endl;
-
     return last_doublon_index;
 }
 
@@ -200,7 +186,9 @@ void BadAnt::find_move() {
 
     }
 }
-
+/***
+ * the ant has to eat to live
+ */
 bool BadAnt::eat(){
     if(nest->getFood()<DAILY_FOOD_CONSUMPTION_ANT){ // not enough food, ant die.
         die();
