@@ -29,13 +29,13 @@ Grid::Grid()
 
 
     sf::Sprite sprites;
-    fourmis.loadFromFile("../Ressources/pic/ant.png");
-    bouffe.loadFromFile("../Ressources/pic/food.jpg");
+    fourmis.loadFromFile("../Ressources/pic/scout.png");
+    bouffe.loadFromFile("../Ressources/pic/food.png");
     gazon.loadFromFile("../Ressources/pic/pelouse.jpg");
     colony.loadFromFile("../Ressources/pic/colony.jpg");
     rock.loadFromFile("../Ressources/pic/rock.png");
     fog.loadFromFile("../Ressources/pic/black.jpg");
-    worker.loadFromFile("../Ressources/pic/ouvriere.png");
+    worker.loadFromFile("../Ressources/pic/worker.png");
     soldier.loadFromFile("../Ressources/pic/soldier.png");
     badAnt.loadFromFile("../Ressources/pic/badAnt.png");
     ping = 700;
