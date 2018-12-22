@@ -170,8 +170,6 @@ void Worker::clear_path_to_nest(){
 
     }
 
-
-
     for(i =0; i <size;i++){
         if(l[size-i-1].getX() != -1){
             path_to_nest.push(l[size-i-1]);
@@ -250,6 +248,8 @@ bool Worker::eat(){
         nest->setFood(nest->getFood()-DAILY_FOOD_CONSUMPTION_ANT);
         return true;
     }
+
+
 }
 
 /***
