@@ -1,7 +1,7 @@
 //
 // Created by edgar on 28/11/2018.
 //
-using namespace std;
+
 
 #ifndef C_ANT_H
 #define C_ANT_H
@@ -10,11 +10,15 @@ using namespace std;
 #include "../Map/Coord.h"
 #include <stack>
 #include <cmath>
-#include "../define.h"
+#include "../../src/define.h"
+
+using namespace std;
+using namespace WIND;
 
 class Nest;
 
-class Ant {
+
+class colony::Ant {
 
 public:
     Ant(Nest n, Coord = {(int) round(HEIGHT/2),(int) round(WIDTH/2)}, int = 0);
@@ -26,7 +30,7 @@ public:
 
     void setAge(int age);
 
-    virtual void update() = 0;
+    virtual bool update() = 0;
     virtual bool eat() = 0;
     virtual void die() = 0;
 

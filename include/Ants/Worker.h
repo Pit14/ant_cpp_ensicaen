@@ -7,11 +7,11 @@ using namespace std;
 #define C_WORKER_H
 
 
-#include "Ant.h"
+#include "../../include/Ants/Ant.h"
 #include "../Map/Grid.h"
 
 
-class Worker: public Ant {
+class colony::Worker: public Ant {
 
 protected:
     bool is_minor;
@@ -29,7 +29,7 @@ public:
     void move(int x, int y);
     void move_back_to_nest(int x, int y);
     virtual bool eat();
-    virtual void update();
+    virtual bool update();
     Worker(Nest *n);
     int get_last_doublon(int i, vector<Coord> l);
 

@@ -7,7 +7,7 @@
 
 
 #include "Coord.h"
-#include "../define.h"
+#include "../../src/define.h"
 
 class Cell {
 
@@ -18,13 +18,16 @@ public:
     Cell();
     void TakeFood();
     void EatFood(int value);
-    friend void setValue(Cell &, Coord* current_coord, float food, int phero, int current_ants,state_cell state);
+    void setValue( Coord* current_coord, float food, int phero, int current_ants);
     state_cell getState();
     void setState(state_cell states);
     void setFood(float foods);
     float getFood();
     void setVisible();
     bool getHide();
+    int getCurrentAnts();
+    void addAnt();
+    void takeAnt();
 
 protected:
     Coord* current_coord;

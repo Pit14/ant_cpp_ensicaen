@@ -2,8 +2,10 @@
 // Created by Jerome on 05/12/2018.
 //
 
-#include "Nest.h"
-#include "Queen.h"
+#include "../../include/Ants/Nest.h"
+#include "../../include/Ants/Queen.h"
+using namespace FOODS;
+
 
 Nest::Nest(Cell ** m) {
     food = INITIAL_FOOD_ON_NEST;
@@ -16,17 +18,31 @@ Nest::Nest(Cell ** m) {
  * we call this function each day,
  * it will call the update function of each ant in the list of ant
  */
-void Nest::update_nest() {
+bool Nest::update_nest() {
+
+    bool res;
+    bool exit;
     for(std::list<Ant*>::iterator it = ants.begin(); it!=ants.end(); ++it)
     {
-        (*it)->update();
+        res = (*it)->update();
+        if (res == true)
+            exit = true;
     }
-}
 
+    if (exit == true)
+        return true;
+
+    return false;
+}
+/***
+ * return the list of the ant
+ */
 const list<Ant *> &Nest::getAnts() const {
     return ants;
 }
-
+/***
+ * return the food in the colony
+ */
 double Nest::getFood() const {
     return food;
 }
@@ -34,15 +50,24 @@ double Nest::getFood() const {
 void Nest::setAnts(const list<Ant *> &ants) {
     Nest::ants = ants;
 }
-
+/***
+ * modify the count of food in the colony
+ * @param food
+ */
 void Nest::setFood(double food) {
     Nest::food = food;
 }
-
+/***
+ * add an ant to the list of ant
+ * @param a
+ */
 void Nest::add_ant(Ant *a) {
     ants.push_back(a);
 }
 
+/***
+ * return the map
+ */
 Cell **Nest::getMap() const {
     return map;
 }

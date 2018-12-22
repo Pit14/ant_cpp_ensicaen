@@ -3,8 +3,9 @@
 //
 
 
-#include "Cell.h"
-#include "Coord.h"
+#include <iostream>
+#include "../../include/Map/Cell.h"
+#include "../../include/Map/Coord.h"
 
 
 Cell::Cell()= default;
@@ -42,11 +43,25 @@ float Cell::getFood() {
 state_cell Cell::getState(){
     return state;
 }
-void setValue(Cell &c, Coord* current_coords, float foods, int pheros, int currents_ants,state_cell states) {
-    c.current_coord = current_coords;
-    c.food = foods;
-    c.phero = pheros;
-    c.current_ants = currents_ants;
-    c.state = states;
-    c.hide = true;
+
+int Cell::getCurrentAnts() {
+    return current_ants;
+}
+
+void Cell::addAnt(){
+    current_ants++;
+}
+
+void Cell::takeAnt(){
+    current_ants--;
+}
+
+
+void Cell::setValue( Coord* current_coords, float foods, int pheros, int currents_ants) {
+    current_coord = current_coords;
+    food = foods;
+    phero = pheros;
+    current_ants = currents_ants;
+    hide = true;
+
 };

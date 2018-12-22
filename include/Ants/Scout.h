@@ -9,7 +9,8 @@
 #include "Ant.h"
 #include "../Map/Grid.h"
 
-class Scout: public Ant {
+
+class colony::Scout: public Ant {
 
 private:
     bool is_minor;
@@ -21,7 +22,7 @@ public:
     void move(int x, int y);
     void find_move();
     virtual bool eat();
-    virtual void update();
+    virtual bool update();
     Scout(Nest *n);
     bool try_to_move(int x, int y,Cell ** m);
     void discoverMap(int x,int y);

@@ -2,8 +2,10 @@
 // Created by edgar on 29/11/2018.
 //
 
-#include "Scout.h"
-#include "Nest.h"
+#include "../../include/Ants/Scout.h"
+#include "../../include/Ants/Nest.h"
+using namespace DATA;
+using  namespace FOODS;
 
 Scout::Scout(Nest *n):
         Ant(*n)
@@ -14,14 +16,15 @@ Scout::Scout(Nest *n):
 
     Cell ** m = nest->getMap();
 
-   /* int cpti;
+    int cpti;
     int cptj;
     for(cpti=0;cpti<HEIGHT-1;cpti++){
         for(cptj=0;cptj<WIDTH-1;cptj++){
-            cout << " " << m[cptj][cpti].getState();
+            if (m[cptj][cpti].getState()!= BLOCKED && m[cptj][cpti].getState()!=FREE && m[cptj][cpti].getState()!=FOOD) {
+
+            }
         }
-        cout << endl;
-    }*/
+    }
 
 }
 
@@ -100,8 +103,11 @@ void Scout::find_move() {
 bool Scout::try_to_move(int x,int y, Cell ** m){
 
     if(!Grid::isOutOfLimit(x,y)) {
-        if (m[x][y].getState() != BLOCKED) {
-            move(x,y);
+        if (m[x][y].getState() != BLOCKED && m[x][y].getCurrentAnts()<9) {
+
+            m[x][y].takeAnt();
+            move(x, y);
+            m[x][y].addAnt();
             return true;
         }
     }
@@ -119,6 +125,12 @@ void Scout::discoverMap(int x, int y) {
         m[x][y].setVisible();
 }
 
+/***
+ * check all the neighbour of the current position to know if one of them is preferable to move
+ * --> to know if a move in that location can remove some fog one the grid
+ * @param x
+ * @param y
+ */
 std::vector <int> Scout::checkAllNeighbour(  int x, int y){
 
     std::vector <int> neighbour_In_Fog;
@@ -150,6 +162,12 @@ std::vector <int> Scout::checkAllNeighbour(  int x, int y){
     return neighbour_In_Fog;
 
 }
+
+/***
+ * check all the neighbour to know if they are in fog
+ * @param x
+ * @param y
+ */
 bool Scout::checkNeighbourFog(int x, int y) {
 
     if(isInFog(x+1,y))
@@ -172,6 +190,11 @@ bool Scout::checkNeighbourFog(int x, int y) {
     return false;
 }
 
+/***
+ * check if the case is in fog
+ * @param x
+ * @param
+ */
 bool Scout::isInFog( int x, int y) {
     Cell ** m = nest->getMap();
     if ( !Grid::isOutOfLimit(x,y) && m[x][y].getHide())
@@ -214,7 +237,7 @@ void Scout::move(int x, int y) {
  * function that will be called each day by each ant, they will just do their action for the day :
  * aging, eating, moving, dying....
  */
-void Scout::update(){
+bool Scout::update(){
     setAge(getAge() + 1);
 
     if (getAge() > LIFE_EXPECTANCY) {
@@ -230,6 +253,8 @@ void Scout::update(){
             }
         }
     }
+
+    return false;
 }
 
 /***

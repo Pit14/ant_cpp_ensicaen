@@ -8,15 +8,17 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics.hpp>
 #include <zconf.h>
-#include "Grid.h"
-#include "Cell.h"
+#include "../../include/Map/Grid.h"
+#include "../../include/Map/Cell.h"
 #include <chrono>
 #include <typeinfo>
 #include <thread>
 #include <fstream>
-#include "../Ants/Queen.h"
-#include "../Ants/Nest.h"
-
+#include "../../include/Ants/Queen.h"
+#include "../../include/Ants/Nest.h"
+using namespace WIND;
+using namespace DATA;
+using namespace FOODS;
 
 Grid::Grid()
 {
@@ -119,11 +121,11 @@ void Grid::print_grid(){
 
 
 
-    sf::RenderWindow window(sf::VideoMode(WIND_WIDTH,WIND_HEIGHT),"my screen",sf::Style::Close);
+  //  sf::RenderWindow window(sf::VideoMode(WIND_WIDTH,WIND_HEIGHT),"my screen",sf::Style::Close);
   //  sf::RenderWindow window2(sf::VideoMode(800,600),"my screen",sf::Style::Close);
     // décommenter pour full screen
-    //sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
-    //sf::RenderWindow window(desktop, "SFML works!");
+    sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
+    sf::RenderWindow window(desktop, "SFML works!");
     sf::Clock clock;
     sf::Time elapsed1;
     window.setFramerateLimit(30);
@@ -177,7 +179,10 @@ void Grid::print_grid(){
         window.draw(text);
         if (elapsed1.asMilliseconds()> ping) {
             day++;
-            nest->update_nest();
+            if(nest->update_nest() == true) {
+                window.close();
+                cout << "FIN DE LA SIMULATION " << endl;
+            }
             ants = nest->getAnts();
             write_gnuplot(cmptr_ant,ofs);
 
@@ -452,7 +457,8 @@ void Grid::Initialize() {
         for (int cmptr2(0); cmptr2 < WIDTH; cmptr2++){
             Coord* temp_coord = new Coord(HEIGHT,WIDTH);
 
-            setValue(array[cmptr][cmptr2], temp_coord,0,0,0,FREE);
+            array[cmptr][cmptr2].setValue( temp_coord,0,0,0);
+            array[cmptr][cmptr2].setState(FREE);
         }
     }
 

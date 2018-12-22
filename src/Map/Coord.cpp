@@ -3,7 +3,7 @@
 //
 using namespace std;
 
-#include "Coord.h"
+#include "../../include/Map/Coord.h"
 
 Coord::Coord(int x, int y) {}
 

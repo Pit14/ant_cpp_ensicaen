@@ -10,6 +10,8 @@
 #include "Ant.h"
 #include "../Map/Cell.h"
 
+using namespace colony;
+
 class Nest {
 
 protected :
@@ -21,7 +23,7 @@ public:
 
     Nest(Cell ** map);
 
-   void update_nest();
+   bool update_nest();
 
     void setAnts(const list<Ant*> &ants);
 

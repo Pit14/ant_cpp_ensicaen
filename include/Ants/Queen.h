@@ -12,17 +12,17 @@
 #include "Worker.h"
 #include "Scout.h"
 
-class Queen:public Ant {
+
+class colony::Queen:public Ant {
 
 public:
     Queen(Nest *n);
 
-    virtual void update();
+    virtual bool update();
     virtual bool eat();
     virtual void die();
 
     void give_birth();
-    //Coord position;
 };
 
 

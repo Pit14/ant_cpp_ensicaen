@@ -2,8 +2,11 @@
 // Created by edgar on 29/11/2018.
 //
 
-#include "Queen.h"
-#include "Nest.h"
+#include "../../include/Ants/Queen.h"
+#include "../../include/Ants/Nest.h"
+
+using namespace DATA;
+using namespace FOODS;
 
 Queen::Queen(Nest *n):
     Ant(*n)
@@ -15,22 +18,25 @@ Queen::Queen(Nest *n):
  * function that will be called each day by each ant, they will just do their action for the day :
  * aging, eating, give birth, dying....
  */
-void Queen::update(){
+bool Queen::update(){
     setAge(getAge() + 1);
-    //cout << nest->getFood() << endl;
+
     if (getAge() > QUEEN_LIFE_EXPECTANCY) {
         die();
+        return true;
     }else {
         if(eat()){
             if (age > 1) {
                 give_birth();
+                give_birth();
             } else { // the first day she gave birth to a scout
                 nest->add_ant(new Scout(nest));
-                //nest->add_ant(new Worker(nest));
                 give_birth();
             }
-        }
+        } else
+            return true;
     }
+    return false;
 }
 
 /***
