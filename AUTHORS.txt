@@ -1,7 +1,7 @@
 ----------------------------------------------------
                   ENSICAEN
                
-            6 Boulevard Maréchal Juin
+            6 Boulevard Marchal Juin
                 
               F-14050 Caen Cedex
 
@@ -15,6 +15,6 @@
 
 
 
-MORVAN Jerome (morvan@ecole.ensicaen.fr)
+MORVAN Jerome (jerome.morvan@ecole.ensicaen.fr)
 
-THOMAS Edgar (ethomas@ecole.ensicaen.fr)
+THOMAS Edgar (edgar.thomas@ecole.ensicaen.fr)
