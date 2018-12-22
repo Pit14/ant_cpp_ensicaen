@@ -124,7 +124,7 @@ int Grid::loadAnts(sf::RenderWindow &window, list<Ant*> ants) {
  * @param text
  */
 void Grid::show_stat(sf::RenderWindow &window, int cmptr_ant, sf::Text text) {
-    text.setString("Day : "+to_string(day)+" Ant : "+to_string(cmptr_ant)+" Food : "+to_string(nest->getFood())+" Ping : "+to_string(ping)+"ms");
+    text.setString("Day : "+to_string(day)+" Ant : "+to_string(cmptr_ant)+" Food : "+to_string(nest->getFood())+" Speed : "+to_string(ping)+"ms");
     window.draw(text);
 }
 
