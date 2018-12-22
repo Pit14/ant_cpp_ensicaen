@@ -189,12 +189,4 @@ void BadAnt::find_move() {
 /***
  * the ant has to eat to live
  */
-bool BadAnt::eat(){
-    if(nest->getFood()<DAILY_FOOD_CONSUMPTION_ANT){ // not enough food, ant die.
-        die();
-        return false;
-    }else{
-        nest->setFood(nest->getFood()-DAILY_FOOD_CONSUMPTION_ANT);
-        return true;
-    }
-}
+bool BadAnt::eat(){ return true;}

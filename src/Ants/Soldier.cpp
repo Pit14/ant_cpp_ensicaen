@@ -90,9 +90,9 @@ bool Soldier::try_to_move(int x,int y, Cell ** m){
     if(!Grid::isOutOfLimit(x,y)) {
         if (m[x][y].getState() != BLOCKED && !m[x][y].getHide() ) {
 
-            m[x][y].takeAnt();
+          //  m[current_coord.getX()][current_coord.getY()].takeAnt();
             move(x, y);
-            m[x][y].addAnt();
+          //  m[x][y].addAnt();
             day_without_nest++;
             if( day_without_nest > when_return_nest)
                 clear_path_to_nest();

@@ -27,7 +27,6 @@ Grid::Grid()
     food_number = round(HEIGHT*WIDTH*FOOD_PERCENTAGE );
 
 
-
     sf::Sprite sprites;
     fourmis.loadFromFile("../Ressources/pic/ant.png");
     bouffe.loadFromFile("../Ressources/pic/food.jpg");
@@ -41,7 +40,12 @@ Grid::Grid()
     ping = 700;
 }
 
-
+/***
+ * load all the element of the map, rock, foods and fog...
+ * it checks all the state of the cell and apply a sprite of 32*32 on the x*32 pixel and y*32 pixel
+ * and then draw it on the window
+ * @param window
+ */
 void Grid::loadSprite(sf::RenderWindow &window) {
 
 
@@ -68,6 +72,12 @@ void Grid::loadSprite(sf::RenderWindow &window) {
         }
     }
 }
+/***
+ * load all the differents sprite for the ants
+ * it checks all the list of all ants and then use a dynamic cast to know what is the type of the ant
+ * and then draw it on the window
+ * @param window
+ */
 int Grid::loadAnts(sf::RenderWindow &window, list<Ant*> ants) {
 
     int cmptr = 0;
@@ -96,7 +106,6 @@ int Grid::loadAnts(sf::RenderWindow &window, list<Ant*> ants) {
         {
             sprites.setTexture(badAnt);
         }
-       // if(typeid(*it).name() == "Worker")
             sprites.setTextureRect(sf::IntRect(0, 0, 32, 32));
             sprites.setPosition(32 * temp->getX(), 32 * temp->getY());
             window.draw(sprites);
@@ -108,28 +117,42 @@ int Grid::loadAnts(sf::RenderWindow &window, list<Ant*> ants) {
     return cmptr;
 }
 
+/***
+ * show on the window a string containing main statistic of the simulation
+ * @param window
+ * @param cmptr_ant
+ * @param text
+ */
 void Grid::show_stat(sf::RenderWindow &window, int cmptr_ant, sf::Text text) {
     text.setString("Day : "+to_string(day)+" Ant : "+to_string(cmptr_ant)+" Food : "+to_string(nest->getFood())+" Ping : "+to_string(ping)+"ms");
     window.draw(text);
 }
 
+/***
+ * write in a file the statistic of the simulation, when launching gnuplot, it will open that file
+ * @param cmptr_ant
+ * @param ofs
+ */
 void Grid::write_gnuplot( int cmptr_ant, std::ofstream &ofs) {
     ofs << to_string(day) << " " << to_string(cmptr_ant) << " " << to_string(nest->getFood()) << "\n";
 
 }
+
+/***
+ * Main function which will call all the update and refresh function
+ * it also use listener on the windows to know the position of mouse and move the screen in case of click by user
+ */
 void Grid::print_grid(){
 
 
 
-  //  sf::RenderWindow window(sf::VideoMode(WIND_WIDTH,WIND_HEIGHT),"my screen",sf::Style::Close);
-  //  sf::RenderWindow window2(sf::VideoMode(800,600),"my screen",sf::Style::Close);
-    // décommenter pour full screen
+
     sf::VideoMode desktop = sf::VideoMode().getDesktopMode();
     sf::RenderWindow window(desktop, "SFML works!");
     sf::Clock clock;
     sf::Time elapsed1;
     window.setFramerateLimit(30);
-    //window.setFramerateLimit(100);
+
     sf::Vector2f oldPos;
     bool moving = false;
     int cmptr_ant = 0;
@@ -145,23 +168,22 @@ void Grid::print_grid(){
     font.loadFromFile("../Ressources/arial.ttf");
     sf::Text text;
 
-// select the font
-    text.setFont(font); // font is a sf::Font
+
+    text.setFont(font);
 
 
     text.setCharacterSize(24);
     text.setFillColor(sf::Color::Red);
     text.setStyle(sf::Text::Bold | sf::Text::Underlined);
     text.setPosition((WIDTH*32/2)-WIND_WIDTH+200,(HEIGHT*32/2)-WIND_HEIGHT-120);
-    //window.draw(text);
 
-    // Retrieve the window's default view
+
     sf::View view = window.getDefaultView();
     view.setCenter((HEIGHT*32)/2,(WIDTH*32)/2);
     zoom = 2.f;
     view.zoom(zoom);
     window.setView(view);
-    //window.draw(text);
+
     window.display();
 
 
@@ -199,14 +221,14 @@ void Grid::print_grid(){
                     window.close();
                     break;
                 case sf::Event::MouseButtonPressed:
-                    // Mouse button is pressed, get the position and set moving as active
+
                     if (event.mouseButton.button == 0) {
                         moving = true;
                         oldPos = window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
                     }
                     break;
                 case  sf::Event::MouseButtonReleased:
-                    // Mouse button is released, no longer move
+
                     if (event.mouseButton.button == 0) {
                         moving = false;
                     }
@@ -228,16 +250,15 @@ void Grid::print_grid(){
 
                 case sf::Event::MouseMoved:
                 {
-                    // Ignore mouse movement unless a button is pressed (see above)
+
                     if (!moving)
                         break;
-                    // Determine the new position in world coordinates
+
                     const sf::Vector2f newPos = window.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
-                    // Determine how the cursor has moved
-                    // Swap these to invert the movement direction
+
                     const sf::Vector2f deltaPos = oldPos - newPos;
                     sf::Vector2f deltaPos2 = oldPos - newPos;
-                    // Move our view accordingly and update the window
+
 
                     deltaPos2.x = deltaPos2.x-WIND_WIDTH+30;
                     deltaPos2.y = deltaPos2.y-WIND_HEIGHT +20;
@@ -245,18 +266,16 @@ void Grid::print_grid(){
                     text.setPosition(view.getCenter()+deltaPos2);
                     window.setView(view);
 
-                    // Save the new position as the old one
-                    // We're recalculating this, since we've changed the view
+
                     oldPos = window.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
                     break;
                 }
                 case sf::Event::MouseWheelScrolled:
-                    // Ignore the mouse wheel unless we're not moving
+
                     if (moving)
                         break;
 
-                    // Determine the scroll direction and adjust the zoom level
-                    // Again, you can swap these to invert the direction
+
                     if (event.mouseWheelScroll.delta <= -1)
                         zoom = std::min(10.f, zoom + .1f);
                     else if (event.mouseWheelScroll.delta >= 1)
@@ -278,19 +297,31 @@ void Grid::print_grid(){
     }
 
     ofs.close();
+
     system("start \"D:\\Program Files\\gnuplot\\bin\\gnuplot.exe\" ../etc/command.gp ");
 
 
 }
 
+/***
+ * check if the coord (x,y) of out of the limit of the array
+ * @param x
+ * @param y
+ */
 bool Grid::isOutOfLimit( int x, int y) {
     if (x >= WIDTH  || x < 0)
         return true;
     if (y >= HEIGHT || y < 0)
         return true;
-    //cout << x << " "<< y << " is ok"<< endl;
+
     return false;
 }
+
+/***
+ * check if there is a block cell in the neighbour of the current cell
+ * @param x
+ * @param y
+ */
 bool Grid::noNeighbour( int x, int y) {
 
     if (!isOutOfLimit(x-1,y)) {
@@ -309,20 +340,32 @@ bool Grid::noNeighbour( int x, int y) {
         if (array[x][y - 1].getState() == BLOCKED)
             return false;
     }
-  //  cout <<  "no voisin" << endl;
+
     return true;
 }
+
+/***
+ * check if  the case we want to check is free or if there is a FOOD or BLOCK yet
+ * @param x
+ * @param y
+ */
 bool Grid::isFree(int x, int y) {
     if (!isOutOfLimit(x,y)) {
         if (array[x][y].getState() == FREE) {
-        //    cout << "free" << endl;
-
             return true;
         }
     }
     return false;
 }
 
+/***
+ * this function will generate the food in simple block or several one using the principle of back-tracking
+ * @param x
+ * @param y
+ * @param size_food
+ * @param old
+ * @param food_value
+ */
 bool Grid::recursive(int x, int y, int size_food, previous_pos old,int food_value ) {
 
     bool isOk = false;
@@ -331,7 +374,7 @@ bool Grid::recursive(int x, int y, int size_food, previous_pos old,int food_valu
 
             array[x][y].setState(GHOST_FOOD);
             if (size_food == 1) {
-                //cout << x << " " << y << "food" << endl;
+
                 array[x][y].setState(FOOD);
                 array[x][y].setFood(food_value);
                 return true;
@@ -347,7 +390,7 @@ bool Grid::recursive(int x, int y, int size_food, previous_pos old,int food_valu
 
             if (isOk) {
                 array[x][y].setState(FOOD);
-                //cout << x << " " << y << "food" << endl;
+
                 return true;
             }
             array[x][y].setState(FREE);
@@ -356,6 +399,14 @@ bool Grid::recursive(int x, int y, int size_food, previous_pos old,int food_valu
 
     return false;
 }
+
+/***
+ * this function will generate the rock in simple block or several one using the principle of back-tracking
+ * @param x
+ * @param y
+ * @param size_rock
+ * @param old
+ */
 bool Grid::recursive(int x, int y, int size_rock, previous_pos old ) {
 
     bool isOk = false;
@@ -364,7 +415,7 @@ bool Grid::recursive(int x, int y, int size_rock, previous_pos old ) {
 
             array[x][y].setState(GHOST_ROCK);
             if (size_rock == 1) {
-                //cout << x << " " << y << "blocked" << endl;
+
                 array[x][y].setState(BLOCKED);
                 return true;
             }
@@ -379,7 +430,7 @@ bool Grid::recursive(int x, int y, int size_rock, previous_pos old ) {
 
             if (isOk) {
                 array[x][y].setState(BLOCKED);
-                //cout << x << " " << y << "blocked" << endl;
+
                 return true;
             }
             array[x][y].setState(FREE);
@@ -389,7 +440,11 @@ bool Grid::recursive(int x, int y, int size_rock, previous_pos old ) {
     return false;
 }
 
-
+/***
+ * this function will choose a random position to call after the function which will generate rock
+ * @param number_of_rock
+ * @param size_rock
+ */
 void Grid::create_rock(double number_of_rock, int size_rock) {
     int cmptr;
 
@@ -405,14 +460,19 @@ void Grid::create_rock(double number_of_rock, int size_rock) {
 
     }
 }
-
+/***
+ * this function will choose a random position to call after the function which will generate food
+ * @param number_of_food
+ * @param size_food
+ * @param food_value
+ */
 void Grid::create_food(double number_of_food, int size_food, int food_value) {
     int cmptr;
 
     int x,y;
 
     for( cmptr = 0; cmptr < number_of_food; cmptr++ ) {
-    //    cout << 1 << endl;
+
         x = rand() % WIDTH;
         y = rand() % HEIGHT;
 
@@ -421,6 +481,9 @@ void Grid::create_food(double number_of_food, int size_food, int food_value) {
 
     }
 }
+/***
+ * this function will call several time the functions that will generate elements of the map
+ */
 void Grid::generate() {
 
 
@@ -440,6 +503,10 @@ void Grid::generate() {
 
 
 }
+
+/***
+ * initialize the colony at the center of the map
+ */
 void Grid::create_original_colony() {
 
     int x = (int) round(WIDTH/2);
@@ -447,6 +514,11 @@ void Grid::create_original_colony() {
     array[x][y].setState(COLONY);
     array[x][y].setVisible();
 }
+
+/***
+ * initialize the array containing the cells
+ * and create the nest
+ */
 void Grid::Initialize() {
 
 
@@ -463,7 +535,6 @@ void Grid::Initialize() {
     }
 
     //we create the nest
-   // nest = new Nest(array);
 
     nest = new Nest(array);
 

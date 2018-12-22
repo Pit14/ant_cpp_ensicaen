@@ -16,6 +16,7 @@ class Cell {
 public:
 
     Cell();
+    virtual ~Cell();
     void TakeFood();
     void EatFood(int value);
     void setValue( Coord* current_coord, float food, int phero, int current_ants);
