@@ -5,6 +5,8 @@
 #ifndef C_DEFINE_H
 #define C_DEFINE_H
 
+#include <string>
+
 namespace  colony {
     class BadAnt;
     class Ant;

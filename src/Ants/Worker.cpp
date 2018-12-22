@@ -44,12 +44,9 @@ void Worker::move(int x, int y) {
     current_coord.setY(y);
 
     if(!is_carriyng_food){
-        //cout << x << " " << y << endl;
-       // Coord c = Coord(x,y);
-        //cout << c.getX() << " "<< c.getY() << endl;
         path_to_nest.push(current_coord);
     }else if(is_carriyng_food && !path_to_nest.empty()){
-      //  path_to_nest.pop();
+
     }
 
 }
@@ -57,7 +54,7 @@ void Worker::move(int x, int y) {
 void Worker::move_back_to_nest(int x, int y){
     current_coord.setX(x);
     current_coord.setY(y);
-    //cout << current_coord.getX() << " " << current_coord.getY() << endl;
+
     path_to_nest.pop();
 }
 
@@ -67,7 +64,7 @@ void Worker::move_back_to_nest(int x, int y){
  */
 bool Worker::update(){
     setAge(getAge() + 1);
-    int x,y;
+
 
     if (getAge() > LIFE_EXPECTANCY) {
         die();
@@ -123,9 +120,9 @@ bool Worker::try_to_move(int x,int y, Cell ** m){
                 clear_path_to_nest();
 
             }
-            m[x][y].takeAnt();
+        //    m[current_coord.getX()][current_coord.getY()].takeAnt();
             move(x, y);
-            m[x][y].addAnt();
+         //   m[x][y].addAnt();
 
 
             return true;
